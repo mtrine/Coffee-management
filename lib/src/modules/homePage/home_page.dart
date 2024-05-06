@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../optionOrderPage/option_order_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -9,7 +10,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF492803),
-        title: Text('Welcome.',
+        title: const Text('Welcome.',
           style: TextStyle(
               color: Colors.white,
               fontSize: 35.0,
@@ -22,46 +23,69 @@ class HomePage extends StatelessWidget {
       body: SingleChildScrollView(
         child:Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children:[
-
-              Container(
-                padding: EdgeInsets.all(8.0), // Thiết lập padding cho khoảng cách giữa các nút
-                child: GridView.count(
-                  crossAxisCount: 2, // Số lượng cột trong GridView
-                  crossAxisSpacing: 8.0, // Khoảng cách giữa các cột
-                  mainAxisSpacing: 8.0, // Khoảng cách giữa các hàng
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFc49a6c),
-                        fixedSize: Size(100, 100),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        side: BorderSide(width: 2, color: Color(0xFF492803)),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.edit_note, size: 70.0, color: Colors.white),
-                          SizedBox(height: 8.0),
-                          Text('Order', style: TextStyle(fontSize: 20.0, color: Colors.white)),
-                        ],
-                      ),
-                    ),
-                    //Thêm các ElevatedButton khác tương tự ở đây nếu cần
-                  ],
-                ),
+          child:GridView(gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+          ),
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(
               ),
-
-
-            ],
-              )
+              children:[
+                CardOption(icon: Icons.edit_note,onTap: ()=>Get.to(OptionOrderPage()),content: "ORDERS",),
+                CardOption(icon: Icons.ballot,onTap: ()=>Get.to(OptionOrderPage()),content: "INVOICE",),
+              ]
+          )
 
         )
       ) ,
+    );
+  }
+}
+
+class CardOption extends StatelessWidget {
+  CardOption({
+    super.key,
+    required this.icon,
+    required this.onTap,
+    required this.content,
+  });
+  IconData icon;
+  final VoidCallback onTap;
+  String content;
+
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+    onTap:onTap ,
+    child: Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Card(
+        margin: const EdgeInsets.all(8), // Đặt margin cho Card
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(color: Color(0xFF492803), width: 2),
+          borderRadius: BorderRadius.circular(12),
+        ), // Đặt padding cho nội dung bên trong Card
+          child: Container(
+            width: 150,
+            height: 150,
+            decoration: BoxDecoration(
+              color: const Color(0xffc49a6c),
+              borderRadius: BorderRadius.circular(12), // Đặt bán kính cong cho góc của Container
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(icon, size: 70, color: Colors.white),
+                Text(
+                  content,
+                  style: const TextStyle(color: Colors.white, fontSize: 20,fontWeight: FontWeight.w500,fontFamily: "Second Family"),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

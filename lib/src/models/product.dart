@@ -4,9 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Product {
   late final String _id;
   late final String _name;
-  late final double _unitPrice;
+  late final int _unitPrice;
   late final String _imageUrl;
-  late final String _categoryId;
+  late final DocumentReference _categoryId;
 
   Product(this._id, this._name, this._unitPrice, this._imageUrl, this._categoryId);
 
@@ -17,9 +17,9 @@ class Product {
     _id = value;
   }
 
-  String get categoryId => _categoryId;
+  DocumentReference get categoryId => _categoryId;
 
-  set categoryId(String value) {
+  set categoryId(DocumentReference value) {
     _categoryId = value;
   }
 
@@ -30,9 +30,9 @@ class Product {
   }
 
 
-  double get unitPrice => _unitPrice;
+  int get unitPrice => _unitPrice;
 
-  set unitPrice(double value) {
+  set unitPrice(int value) {
     _unitPrice = value;
   }
 
@@ -57,7 +57,7 @@ class Product {
       doc.id,
       data['name'],
       data['unitPrice'],
-      data['imageUrl'],
+      data['image_url'],
       data['categoryId'],
     );
   }

@@ -117,10 +117,12 @@ class AuthBloc{
       } else {
         // Người dùng chưa tồn tại
         await _firestore.collection('Staff').add({
-          'fname': fname,
-          'lname': lname,
+          'fName': fname,
+          'mlName': lname,
           'phone': phone,
           'password': password,
+          'address': address,
+          'bDate': dob,
         });
 
         // Đăng ký thành công

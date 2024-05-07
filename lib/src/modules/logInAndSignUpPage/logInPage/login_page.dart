@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qlqn/src/models/staff.dart';
 import '../../../dialog/loading_dialog.dart';
 import '../../../dialog/msg_dialog.dart';
 import '../../../my_app.dart';
@@ -20,18 +21,24 @@ class _LogInPageState extends State<LogInPage> {
 
   @override
   Widget build(BuildContext context) {
-    void _onSignInClick() {
+    void _onSignInClick() async {
       final String phone = _phoneController.text;
       final String password = _passwordController.text;
+      final Staff? staff = await Staff.getByPhone(phone); // Sử dụng phương thức getByPhone
       var authBloc = MyApp.of(context).authBloc;
       LoadingDialog.showLoadingDialog(context, 'Loading...');
-      authBloc.signIn(phone, password, () {
+      if (staff != null) {
+        authBloc.signIn(phone, password, () {
+          LoadingDialog.hideLoadingDialog(context);
+          Get.to(() => HomePage(staff: staff));
+        }, (msg) {
+          LoadingDialog.hideLoadingDialog(context);
+          MsgDialog.showMsgDialog(context, 'Sign-In', msg);
+        });
+      } else {
         LoadingDialog.hideLoadingDialog(context);
-        Get.to(() => HomePage());
-      }, (msg) {
-        LoadingDialog.hideLoadingDialog(context);
-        MsgDialog.showMsgDialog(context, 'Sign-In', msg);
-      });
+        print('Don\'t have staff');
+      }
     }
     return SafeArea(
       child: Padding(

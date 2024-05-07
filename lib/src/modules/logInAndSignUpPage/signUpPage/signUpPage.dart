@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:qlqn/src/modules/logInAndSignUpPage/logInPage/login_page.dart';
 import '../../../bloc/auth_bloc.dart';
 import '../../../dialog/loading_dialog.dart';
 import '../../../dialog/msg_dialog.dart';
-import '../../homePage/home_page.dart';
 import 'components/textfield_to_signup.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -77,35 +75,69 @@ class _SignUpPageState extends State<SignUpPage> {
         )
     );
   }
-  _onSignUpClicked(){
-    var isValid=authBloc.isValidInfo(
+
+  void _onSignUpClicked() async {
+    var isValid = authBloc.isValidInfo(
+      _fNameController.text,
+      _mlNameController.text,
+      _phoneController.text,
+      _dobController.text,
+      _addressController.text,
+      _passwordController.text,
+    );
+
+    if (isValid) {
+
+
+      // Hiển thị loading dialog
+      LoadingDialog.showLoadingDialog(context, 'Loading...');
+
+      // Gọi phương thức sign up từ authBloc
+      authBloc.signUp(
         _fNameController.text,
         _mlNameController.text,
-        _phoneController.text
-        , _dobController.text,
+        _phoneController.text,
+        _dobController.text,
         _addressController.text,
-        _passwordController.text);
-    if(isValid){
-      //create user
-      //loading dialog
-      LoadingDialog.showLoadingDialog(context, 'Loading...');
-      authBloc.signUp(
-          _fNameController.text,
-          _mlNameController.text,
-          _phoneController.text
-          , _dobController.text,
-          _addressController.text,
-          _passwordController.text
-          , (){
-        LoadingDialog.hideLoadingDialog(context);
-        Get.to(const HomePage());
-      },(msg){
-        // show msg dialog
-        LoadingDialog.hideLoadingDialog(context);
-        MsgDialog.showMsgDialog(context, 'Sign Up', msg);
-      });
+        _passwordController.text,
+            () {
+          // Xử lý khi đăng ký thành công
+          LoadingDialog.hideLoadingDialog(context);
+
+          // Hiển thị thông báo đăng ký thành công
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text("Đăng ký thành công"),
+                content: Text("Chúc mừng! Bạn đã đăng ký thành công."),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+
+                    },
+                    child: Text("Đóng"),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+            (msg) {
+          // Xử lý khi đăng ký thất bại
+          LoadingDialog.hideLoadingDialog(context);
+
+          // Hiển thị thông báo lỗi
+          MsgDialog.showMsgDialog(context, 'Sign Up', msg);
+        },
+      );
     }
   }
+
+
 }
+
+
 
 

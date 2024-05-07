@@ -42,6 +42,32 @@ class ProductFireStore implements Firestore<Product> {
     }
   }
 
+  Future<List<Product>> getByCategoryId(String categoryId) async {
+    try {
+      DocumentReference categoryRef = FirebaseFirestore.instance.collection('Category').doc(categoryId);
+      QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
+          .collection(_collection) // Thay thế 'your_collection' bằng tên của bảng dữ liệu sản phẩm của bạn
+          .where('categoryId', isEqualTo: categoryRef)
+          .get();
+
+      // Chuyển đổi mỗi DocumentSnapshot thành một đối tượng Product
+      List<Product> products = snapshot.docs.map((doc) {
+        Map<String, dynamic> data = doc.data()!;
+
+        return Product(
+          doc.id,
+          data['name'],
+          data['unitPrice'].toInt(),
+          data['image_url'],
+          data['categoryId'],
+        );
+      }).toList();
+      return products;
+    } catch (e) {
+      print("Error: $e");
+      throw e;
+    }
+  }
   @override
   Future<void> insert(Product data) async {
     try {

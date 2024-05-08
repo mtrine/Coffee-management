@@ -1,16 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:qlqn/src/firebase/product_firestore.dart';
 import 'package:qlqn/src/models/category.dart';
 import 'package:qlqn/src/models/product.dart';
-
-import 'components/card_product.dart';
+import 'components/list_product.dart';
 
 class OrderDeatilPage extends StatelessWidget {
   final Categories categories;
-
-  const OrderDeatilPage({Key? key, required this.categories}) : super(key: key);
+  List<Product> listProtuctOrder;
+ OrderDeatilPage({Key? key, required this.categories, required this.listProtuctOrder}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,23 +42,7 @@ class OrderDeatilPage extends StatelessWidget {
               );
             } else {
               List<Product> products = snapshot.data!;
-              return SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child:  GridView(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.zero,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                    ),
-                    scrollDirection: Axis.vertical,
-                    children: products.map((product) => CardProduct(product: product)).toList(),
-                  ),
-                ),
-              );
+              return ListProduct(products: products,listProtuctOrder: listProtuctOrder,);
             }
           },
         ),
@@ -69,6 +50,8 @@ class OrderDeatilPage extends StatelessWidget {
     );
   }
 }
+
+
 
 
 

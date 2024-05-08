@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OrderDetail{
   late final String _id;
-  late final String _orderId;
-  late final String _productId;
+  late final DocumentReference _orderId;
+  late final DocumentReference _productId;
   late final int _quantity;
 
   OrderDetail(this._id, this._orderId, this._productId, this._quantity);
@@ -14,15 +14,15 @@ class OrderDetail{
     _quantity = value;
   }
 
-  String get productId => _productId;
+  DocumentReference get productId => _productId;
 
-  set productId(String value) {
+  set productId(DocumentReference value) {
     _productId = value;
   }
 
-  String get orderId => _orderId;
+  DocumentReference get orderId => _orderId;
 
-  set orderId(String value) {
+  set orderId(DocumentReference value) {
     _orderId = value;
   }
 

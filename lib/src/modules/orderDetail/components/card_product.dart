@@ -5,8 +5,10 @@ class CardProduct extends StatelessWidget {
   CardProduct({
     super.key,
     required this.product,
+    required this.listProtuctOrder,
   });
   Product product;
+  List<Product> listProtuctOrder;
   @override
   Widget build(BuildContext context) {
 
@@ -81,7 +83,6 @@ class CardProduct extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                       bottomRight: Radius.circular(10),
-
                     ),
                   ),
                 ),
@@ -91,7 +92,7 @@ class CardProduct extends StatelessWidget {
                   size: 20,
                 ),
                 onPressed: () {
-                  print('IconButton pressed ...');
+                  listProtuctOrder.add(product);
                 },
               ),
 

@@ -3,12 +3,13 @@ import 'package:get/get.dart';
 import 'package:qlqn/src/models/staff.dart';
 import '../../../dialog/loading_dialog.dart';
 import '../../../dialog/msg_dialog.dart';
+import '../../../models/product.dart';
 import '../../../my_app.dart';
 import '../../homePage/home_page.dart';
 
 class LogInPage extends StatefulWidget {
   LogInPage({Key? key}) : super(key: key);
-
+  List<Product> listProtuctOrder =[];
   @override
   _LogInPageState createState() => _LogInPageState();
 }
@@ -30,7 +31,7 @@ class _LogInPageState extends State<LogInPage> {
       if (staff != null) {
         authBloc.signIn(phone, password, () {
           LoadingDialog.hideLoadingDialog(context);
-          Get.to(() => HomePage(staff: staff));
+          Get.to(() => HomePage(staff: staff,listProtuctOrder:widget.listProtuctOrder ,));
         }, (msg) {
           LoadingDialog.hideLoadingDialog(context);
           MsgDialog.showMsgDialog(context, 'Sign-In', msg);

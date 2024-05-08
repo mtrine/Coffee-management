@@ -1,14 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:qlqn/src/models/staff.dart';
+import 'package:qlqn/src/modules/cartPage/cart_page.dart';
 import 'package:qlqn/src/modules/orderDetail/order_detail_page.dart';
 import '../../models/category.dart';
+import '../../models/product.dart';
 import 'components/card_category.dart';
 import 'package:get/get.dart';
 
 class OptionOrderPage extends StatefulWidget {
-  OptionOrderPage({Key? key, required this.staff}) : super(key: key);
+  OptionOrderPage({Key? key, required this.staff,required this.listProtuctOrder}) : super(key: key);
   Staff staff;
+  List<Product> listProtuctOrder ;
   @override
   _OptionOrderPageState createState() => _OptionOrderPageState();
 }
@@ -28,7 +31,7 @@ class _OptionOrderPageState extends State<OptionOrderPage> {
           style: TextStyle(
             color: Colors.white,
             fontSize: 35.0,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600,
             fontStyle: FontStyle.italic,
             fontFamily: 'Lora',
           ),
@@ -38,7 +41,9 @@ class _OptionOrderPageState extends State<OptionOrderPage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.shopping_cart, color: Colors.white, size: 30),
-            onPressed: () {},
+            onPressed: () {
+              Get.to(CartPage(listOrderItem: widget.listProtuctOrder,staff: widget.staff));
+            },
           ),
         ],
       ),
@@ -66,7 +71,7 @@ class _OptionOrderPageState extends State<OptionOrderPage> {
                       );
                       return GestureDetector(
                           onTap: (){
-                            Get.to(OrderDeatilPage(categories: categories));
+                            Get.to(OrderDeatilPage(categories: categories,listProtuctOrder: widget.listProtuctOrder , ));
                           },
                           child: CardCategory(category: categories));
                     },

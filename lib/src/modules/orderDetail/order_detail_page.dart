@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:qlqn/src/firebase/product_firestore.dart';
 import 'package:qlqn/src/models/category.dart';
 import 'package:qlqn/src/models/product.dart';
+import '../../models/orderDetail.dart';
 import 'components/list_product.dart';
 
 class OrderDeatilPage extends StatelessWidget {
   final Categories categories;
-  List<Product> listProtuctOrder;
+  List<OrderDetail> listProtuctOrder;
  OrderDeatilPage({Key? key, required this.categories, required this.listProtuctOrder}) : super(key: key);
 
   @override

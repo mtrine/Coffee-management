@@ -2,16 +2,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:qlqn/src/models/staff.dart';
 import 'package:qlqn/src/modules/cartPage/cart_page.dart';
+import 'package:qlqn/src/modules/editMenuPage/edit_menu_page.dart';
 import 'package:qlqn/src/modules/orderDetail/order_detail_page.dart';
 import '../../models/category.dart';
-import '../../models/product.dart';
+import '../../models/orderDetail.dart';
 import 'components/card_category.dart';
 import 'package:get/get.dart';
 
 class OptionOrderPage extends StatefulWidget {
   OptionOrderPage({Key? key, required this.staff,required this.listProtuctOrder}) : super(key: key);
   Staff staff;
-  List<Product> listProtuctOrder ;
+  List<OrderDetail> listProtuctOrder ;
   @override
   _OptionOrderPageState createState() => _OptionOrderPageState();
 }
@@ -81,9 +82,8 @@ class _OptionOrderPageState extends State<OptionOrderPage> {
             ),
             const SizedBox(height: 5), // Khoảng cách giữa ListView và nút
             ElevatedButton(
-              onPressed: ()async{
-                final snapshot = await FirebaseFirestore.instance.collection('Product').doc('P01').get();
-                print(snapshot.data()!['categoryId']);
+              onPressed: (){
+                Get.to(EditMenuPage());
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF492803),

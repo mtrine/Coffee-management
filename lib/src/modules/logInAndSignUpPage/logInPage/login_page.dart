@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qlqn/src/models/orderDetail.dart';
 import 'package:qlqn/src/models/staff.dart';
 import '../../../dialog/loading_dialog.dart';
 import '../../../dialog/msg_dialog.dart';
-import '../../../models/product.dart';
 import '../../../my_app.dart';
 import '../../homePage/home_page.dart';
 
 class LogInPage extends StatefulWidget {
   LogInPage({Key? key}) : super(key: key);
-  List<Product> listProtuctOrder =[];
+  List<OrderDetail> listProtuctOrder =[];
   @override
   _LogInPageState createState() => _LogInPageState();
 }

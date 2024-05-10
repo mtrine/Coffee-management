@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:qlqn/src/firebase/firestore.dart';
 import 'package:qlqn/src/models/orderDetail.dart';
 
-class OrderDetailFireStore implements Firestore<OrderDetail> {
+class OrderDetailFireStore {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final String _collection = 'OrderDetail'; // Tên của collection trong Firestore
 
-  @override
+
   Future<void> delete(String id) async {
     try {
       await _firestore.collection(_collection).doc(id).delete();
@@ -16,7 +16,7 @@ class OrderDetailFireStore implements Firestore<OrderDetail> {
     }
   }
 
-  @override
+
   Future<Stream<List<OrderDetail>>> getAll() async {
     try {
       // Lắng nghe sự thay đổi trên collection 'OrderDetail'
@@ -33,7 +33,7 @@ class OrderDetailFireStore implements Firestore<OrderDetail> {
     }
   }
 
-  @override
+
   Future<OrderDetail> getById(String id) async {
     try {
       DocumentSnapshot<Map<String, dynamic>> doc = await _firestore.collection(_collection).doc(id).get();
@@ -44,10 +44,14 @@ class OrderDetailFireStore implements Firestore<OrderDetail> {
     }
   }
 
-  @override
   Future<void> insert(OrderDetail data) async {
     try {
-      await _firestore.collection(_collection).add(data.toJson());
+      await _firestore.collection(_collection).add({
+        "orderId": data.orderId,
+        "productId": data.productId,
+        "quantity": data.quantity,
+      }
+      );
     } catch (e) {
       print("Error: $e");
       throw e; // Ném ngoại lệ để báo lỗi nếu có

@@ -1,22 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../models/orderDetail.dart';
 class CountController extends StatefulWidget {
+  final OrderDetail productOrder;
+
+  CountController({Key? key, required this.productOrder}) : super(key: key);
   @override
   _CountControllerState createState() => _CountControllerState();
 }
 
 class _CountControllerState extends State<CountController> {
-  var _counter = 1.obs;
+  late RxInt itemCount; // Sử dụng RxInt thay cho Obs để theo dõi thay đổi số lượng
+
+  @override
+  void initState() {
+    super.initState();
+    itemCount = widget.productOrder.quantity.obs; // Khởi tạo itemCount ở initState
+  }
 
   void _incrementCounter() {
-    _counter++;
+
+      widget.productOrder.quantity++;
+      itemCount.value = widget.productOrder.quantity; // Cập nhật giá trị itemCount
 
   }
 
   void _decrementCounter() {
-
-    _counter--;
-
+      if (widget.productOrder.quantity > 0) {
+        widget.productOrder.quantity--;
+        itemCount.value = widget.productOrder.quantity; // Cập nhật giá trị itemCount
+      }
   }
 
   @override
@@ -41,11 +55,10 @@ class _CountControllerState extends State<CountController> {
               padding: EdgeInsets.zero, // Remove padding
             ),
           ),
-          Obx(
-                ()=> Text(
-                '$_counter',style: TextStyle(fontSize: 15)
-            ),
-          ),
+          Obx(() => Text(
+            '${itemCount.value}', // Sử dụng itemCount thay cho widget.productOrder.quantity
+            style: TextStyle(fontSize: 15),
+          )),
           ElevatedButton(
             onPressed: _incrementCounter,
             child: Text('+', style: TextStyle(fontSize: 20)),

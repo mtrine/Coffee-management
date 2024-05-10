@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:qlqn/src/models/product.dart';
+
+import '../../../models/orderDetail.dart';
 
 class CardProduct extends StatelessWidget {
   CardProduct({
@@ -8,7 +11,20 @@ class CardProduct extends StatelessWidget {
     required this.listProtuctOrder,
   });
   Product product;
-  List<Product> listProtuctOrder;
+  List<OrderDetail> listProtuctOrder;
+
+  void addProductToOrder(){
+    try{
+      DocumentReference documentReference =
+      FirebaseFirestore.instance.collection('Product').doc(product.id);
+      OrderDetail orderDetail = OrderDetail(
+       "",null,documentReference,1
+      );
+      listProtuctOrder.add(orderDetail);
+    }catch(e){
+      print(e);
+    }
+}
   @override
   Widget build(BuildContext context) {
 
@@ -91,9 +107,7 @@ class CardProduct extends StatelessWidget {
                   color: Colors.white,
                   size: 20,
                 ),
-                onPressed: () {
-                  listProtuctOrder.add(product);
-                },
+                onPressed: addProductToOrder,
               ),
 
             ],

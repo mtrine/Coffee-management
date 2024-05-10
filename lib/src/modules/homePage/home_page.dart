@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qlqn/src/models/staff.dart';
-import '../../models/product.dart';
+import '../../models/orderDetail.dart';
 import '../optionOrderPage/option_order_page.dart';
 import 'components/card_option.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key,required this.staff, required this.listProtuctOrder});
   Staff staff;
-  List<Product> listProtuctOrder ;
+  List<OrderDetail> listProtuctOrder ;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

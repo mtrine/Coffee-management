@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../../../models/orderDetail.dart';
 import '../../../models/product.dart';
 import 'card_product.dart';
 
@@ -11,7 +11,7 @@ class ListProduct extends StatelessWidget {
   });
 
   final List<Product> products;
-  List<Product> listProtuctOrder ;
+   List<OrderDetail> listProtuctOrder ;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

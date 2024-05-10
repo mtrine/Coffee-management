@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class OrderDetail{
+class OrderDetail {
   late final String _id;
-  late final DocumentReference _orderId;
-  late final DocumentReference _productId;
-  late final int _quantity;
+  DocumentReference? _orderId; // Nullable DocumentReference
+  DocumentReference? _productId; // Nullable DocumentReference
+  late  int _quantity;
 
   OrderDetail(this._id, this._orderId, this._productId, this._quantity);
 
@@ -14,15 +14,15 @@ class OrderDetail{
     _quantity = value;
   }
 
-  DocumentReference get productId => _productId;
+  DocumentReference? get productId => _productId; // Nullable DocumentReference
 
-  set productId(DocumentReference value) {
+  set productId(DocumentReference? value) { // Nullable DocumentReference
     _productId = value;
   }
 
-  DocumentReference get orderId => _orderId;
+  DocumentReference? get orderId => _orderId; // Nullable DocumentReference
 
-  set orderId(DocumentReference value) {
+  set orderId(DocumentReference? value) { // Nullable DocumentReference
     _orderId = value;
   }
 
@@ -39,7 +39,6 @@ class OrderDetail{
       'quantity': _quantity,
     };
   }
-
 
   static OrderDetail fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
     Map<String, dynamic> data = doc.data()!;

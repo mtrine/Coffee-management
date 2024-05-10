@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:qlqn/src/firebase/firestore.dart';
 import 'package:qlqn/src/models/category.dart';
 
-class CategoryFireStore implements Firestore<Categories> {
+class CategoryFireStore  {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final String _collection = 'Category';
 
@@ -58,5 +58,21 @@ class CategoryFireStore implements Firestore<Categories> {
       print("Error: $e");
       throw e;
     }
+  }
+
+  Future<List<Categories>> getAllDocuments() async {
+    List<Categories> products = [];
+    try {
+      QuerySnapshot querySnapshot = await _firestore.collection(_collection).get();
+      List<DocumentSnapshot> documents = querySnapshot.docs;
+      for (var doc in documents) {
+        // Xây dựng một đối tượng Product từ dữ liệu của mỗi tài liệu
+        Categories product = Categories(doc.id, doc['name'],  doc['image_url']);
+        products.add(product);
+      }
+    } catch (e) {
+      print('Error getting documents: $e');
+    }
+    return products;
   }
 }

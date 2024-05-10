@@ -1,14 +1,20 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Order{
+class Orders{
   late final String _id;
-  late final String _staffId;
-  late final DateTime _orderDate;
+  late final DocumentReference _staffId;
+  late final Timestamp _orderDate;
   late final String _decription;
+  late final int _total;
 
-  Order(this._id, this._staffId, this._orderDate, this._decription);
+  Orders(
+      this._id, this._staffId, this._orderDate, this._decription, this._total);
+
+  int get total => _total;
+
+  set total(int value) {
+    _total = value;
+  }
 
   String get decription => _decription;
 
@@ -16,15 +22,10 @@ class Order{
     _decription = value;
   }
 
-  DateTime get orderDate => _orderDate;
 
-  set orderDate(DateTime value) {
-    _orderDate = value;
-  }
+  DocumentReference get staffId => _staffId;
 
-  String get staffId => _staffId;
-
-  set staffId(String value) {
+  set staffId(DocumentReference value) {
     _staffId = value;
   }
 
@@ -34,23 +35,9 @@ class Order{
     _id = value;
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': _id,
-      'staffId': _staffId,
-      'orderDate': _orderDate,
-      'description': _decription,
-    };
-  }
+  Timestamp get orderDate => _orderDate;
 
-  // Phương thức tạo đối tượng Order từ một DocumentSnapshot
-  static Order fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
-    Map<String, dynamic> data = doc.data()!;
-    return Order(
-      doc.id,
-      data['staffId'],
-      (data['orderDate'] as Timestamp).toDate(),
-      data['description'],
-    );
+  set orderDate(Timestamp value) {
+    _orderDate = value;
   }
 }

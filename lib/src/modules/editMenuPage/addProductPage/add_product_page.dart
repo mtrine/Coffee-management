@@ -1,9 +1,14 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'dart:io';
+import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:qlqn/src/models/category.dart';
-
+import 'package:qlqn/src/models/product.dart';
 import '../../../firebase/category_firestore.dart';
+import '../../../firebase/firebase_storage.dart';
+import '../../../firebase/product_firestore.dart';
+import 'components/textfield_add_product.dart';
 
 
 class AddProductPage extends StatefulWidget {
@@ -15,7 +20,9 @@ class AddProductPage extends StatefulWidget {
 
 class _AddProductPageState extends State<AddProductPage> {
   List<Categories> categories = [];
-  String _dropDownValue='';
+  var dropDownValue=''.obs;
+  String categoryId = '';
+  XFile? image;
   TextEditingController nameController = TextEditingController();
 
   TextEditingController priceController = TextEditingController();
@@ -23,7 +30,7 @@ class _AddProductPageState extends State<AddProductPage> {
   void initState() {
     super.initState();
     _fetchCategories();
-    _dropDownValue="Chọn mục";
+    dropDownValue.value="Chọn mục";
   }
 
   Future<void> _fetchCategories() async {
@@ -33,11 +40,40 @@ class _AddProductPageState extends State<AddProductPage> {
     });
   }
 
-  void dropDownValue(String? value) {
-    if (value != null) {
+  Future<void> addProduct() async {
+    try {
+      String url = await StorageService().uploadFile(File(image!.path), 'upload');
+      int unitPrice = int.parse(priceController.text);
+      DocumentReference categoryRef = FirebaseFirestore.instance.collection('Category').doc(categoryId);
+      Product product = Product("", nameController.text, unitPrice, url, categoryRef);
+      await ProductFireStore().insert(product);
+
+      // Hiển thị Snackbar thông báo thành công
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Thêm sản phẩm thành công'),
+        duration: Duration(seconds: 2), // Thời gian hiển thị Snackbar
+      ));
+
+      // Đặt lại trạng thái ban đầu
       setState(() {
-        _dropDownValue = value;
+        image = null;
+        nameController.text = '';
+        priceController.text = '';
+        dropDownValue.value = 'Chọn mục';
       });
+    } catch (error) {
+      print('Error adding product: $error');
+      // Hiển thị Snackbar thông báo thất bại
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Thêm sản phẩm thất bại'),
+        duration: Duration(seconds: 2), // Thời gian hiển thị Snackbar
+      ));
+    }
+  }
+
+  void FdropDownValue(String? value) {
+    if (value != null) {
+        dropDownValue.value = value;
     }
   }
   @override
@@ -61,13 +97,15 @@ class _AddProductPageState extends State<AddProductPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           child:Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 20),
                 child: Center(
                   child: ElevatedButton(
-                      onPressed: (){
-                        print(_dropDownValue);
+                      onPressed: () async{
+                        image = await StorageService().pickImage();
+                        setState(() {});
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white70,
@@ -76,23 +114,30 @@ class _AddProductPageState extends State<AddProductPage> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      child: const Center(
+                      child:  image != null
+                          ? Image.file(
+                        File(image!.path),
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: double.infinity,
+                      )
+                          : const Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                            children:[
-                              Icon(Icons.add_a_photo_sharp,color: Colors.grey,size:60),
-                              Text(
-                                'Chọn ảnh',
-                                style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 25,
-                                    fontFamily: 'Secondary Family',
-                                    fontWeight: FontWeight.bold
-                                ),
+                          children: [
+                            Icon(Icons.add_a_photo_sharp, color: Colors.grey, size: 60),
+                            Text(
+                              'Chọn ảnh',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 25,
+                                fontFamily: 'Secondary Family',
+                                fontWeight: FontWeight.bold,
                               ),
-                            ]
-                                      ),
-                      )
+                            ),
+                          ],
+                        ),
+                      ),
                   ),
                 ),
               ),
@@ -120,28 +165,54 @@ class _AddProductPageState extends State<AddProductPage> {
                           width: 2,
                         ),
                       ),
-                      child: DropdownButton<String>(
-                        value: _dropDownValue.isNotEmpty ?  _dropDownValue : null,
-                        isExpanded: true,
-                        items: [
-                          const DropdownMenuItem<String>(
-                            value: "Chọn mục",
-                            child: Text("Chọn mục"),
-                          ),
-                          ...categories.map((Categories category) {
-                            return DropdownMenuItem<String>(
-                              value: category.name,
-                              child: Text(category.name),
-                            );
-                          }).toList(),
-                        ],
-                        onChanged: (value) {
-                          dropDownValue(value);
-                        },
+                      child: Obx(
+                        ()=>DropdownButton<String>(
+                          value: dropDownValue.value.isNotEmpty ?  dropDownValue.value : null,
+                          isExpanded: true,
+                          items: [
+                            const DropdownMenuItem<String>(
+                              value: "Chọn mục",
+                              child: Text("Chọn mục"),
+                            ),
+                            ...categories.map((Categories category) {
+                              return DropdownMenuItem<String>(
+                                value: category.name,
+                                child: Text(category.name),
+                              );
+                            }).toList(),
+                          ],
+                          onChanged: (value) {
+                            FdropDownValue(value);
+                            var selectCategory= categories.firstWhere((element) => element.name == value);
+                            categoryId = selectCategory.id;
+                          },
+                        ),
                       ),
                     ),
                   ),
                 ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 50),
+                child: ElevatedButton(
+                    onPressed: addProduct,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF492803),
+                      fixedSize: const Size(250, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: Text(
+                      'Thêm món',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontFamily: 'Secondary Family',
+                          fontWeight: FontWeight.bold
+                      ),
+                    ),
+                ),
               )
             ],
           )
@@ -151,52 +222,3 @@ class _AddProductPageState extends State<AddProductPage> {
   }
 }
 
-class TextFieldAddProduct extends StatelessWidget {
-  TextFieldAddProduct({
-    super.key,
-    required this.hintText,
-    required this.content,
-    required this.controller
-  });
-  String hintText ;
-  String content ;
-  TextEditingController controller ;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: Row(
-        children: [
-          Text(
-            content,
-            style: const TextStyle(
-                color: Colors.black,
-                fontSize: 25,
-                fontFamily: 'Roboto',
-                fontWeight: FontWeight.bold
-            ),
-          ),
-         const SizedBox(width: 10), // Add this line
-         Expanded(
-           child: TextField(
-             controller: controller,
-             decoration: InputDecoration(
-               filled: true,
-               fillColor: Colors.white,
-               hintText: hintText,
-               enabledBorder: OutlineInputBorder(
-                   borderRadius: BorderRadius.circular(12), // Bo góc
-                   borderSide: const BorderSide(color:  Color(0xFF492803), width: 2.0)
-               ),
-               focusedBorder: OutlineInputBorder(
-                   borderRadius: BorderRadius.circular(8), // Bo góc
-                   borderSide: const BorderSide(color:  Color(0xFF492803), width: 2.0)
-               ),
-             ),
-           ),
-         )
-        ],
-      ),
-    );
-  }
-}

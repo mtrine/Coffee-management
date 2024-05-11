@@ -61,18 +61,18 @@ class CategoryFireStore  {
   }
 
   Future<List<Categories>> getAllDocuments() async {
-    List<Categories> products = [];
+    List<Categories> category = [];
     try {
       QuerySnapshot querySnapshot = await _firestore.collection(_collection).get();
       List<DocumentSnapshot> documents = querySnapshot.docs;
       for (var doc in documents) {
         // Xây dựng một đối tượng Product từ dữ liệu của mỗi tài liệu
         Categories product = Categories(doc.id, doc['name'],  doc['image_url']);
-        products.add(product);
+        category.add(product);
       }
     } catch (e) {
       print('Error getting documents: $e');
     }
-    return products;
+    return category;
   }
 }

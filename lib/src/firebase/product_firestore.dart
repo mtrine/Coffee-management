@@ -72,7 +72,12 @@ class ProductFireStore  {
   @override
   Future<void> insert(Product data) async {
     try {
-      await _firestore.collection(_collection).add(data.toJson());
+      await _firestore.collection(_collection).add({
+        'name': data.name,
+        'unitPrice': data.unitPrice,
+        'image_url': data.imageUrl,
+        'categoryId': data.categoryId
+      });
     } catch (e) {
       print("Error:"+e.toString());
     }

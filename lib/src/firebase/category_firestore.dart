@@ -75,4 +75,35 @@ class CategoryFireStore  {
     }
     return category;
   }
+
+  Future<String> getName(DocumentReference? categoryId) async {
+    DocumentSnapshot documentSnapshot = await categoryId!.get();
+    late String name;
+    try {
+      if (documentSnapshot.exists) {
+        dynamic data = documentSnapshot.data();
+        name = data['name'];
+      } else {
+        // Dữ liệu không tồn tại
+      }
+    } catch (e) {
+      print('Error getting documents: $e');
+    }
+    return name;
+  }
+
+  Future<String> getId(DocumentReference? categoryId) async{
+    DocumentSnapshot documentSnapshot = await categoryId!.get();
+    late String id;
+    try {
+      if (documentSnapshot.exists) {
+        id = documentSnapshot.id;
+      } else {
+
+      }
+    } catch (e) {
+      print('Error getting documents: $e');
+    }
+    return id;
+  }
 }

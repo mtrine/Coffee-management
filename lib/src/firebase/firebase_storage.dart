@@ -35,4 +35,19 @@ class StorageService {
       throw e; // Rethrow để cho phép các phần khác của ứng dụng xử lý lỗi này nếu cần
     }
   }
+
+  Future<void> deleteFile(String imageUrl) async {
+    try {
+      // Get a reference to the image file
+      Reference imageRef = _storage.refFromURL(imageUrl);
+
+      // Delete the file
+      await imageRef.delete();
+
+      print('Image deleted successfully!');
+    } catch (e) {
+      print('Error deleting image: $e');
+      throw e; // Rethrow để cho phép các phần khác của ứng dụng xử lý lỗi này nếu cần
+    }
+  }
 }

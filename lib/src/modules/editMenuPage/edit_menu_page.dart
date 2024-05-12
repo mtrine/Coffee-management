@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qlqn/src/modules/editMenuPage/deletePage/delete_page.dart';
+import 'package:qlqn/src/modules/editMenuPage/updateProductPage/update_product_page.dart';
 import 'addProductPage/add_product_page.dart';
 import 'components/button_edit_page.dart';
 class EditMenuPage extends StatelessWidget {
@@ -33,13 +35,13 @@ class EditMenuPage extends StatelessWidget {
             ),
             ButtonEditPage(
                 icon:Icons.border_color,
-                text:'Thêm món',
-                onTap: ()=>Get.to(AddProductPage())
+                text:'Chỉnh sửa',
+                onTap: ()=>Get.to(UpdateProductPage())
             ),
             ButtonEditPage(
                 icon:Icons.delete,
-                text:'Thêm món',
-                onTap: ()=>Get.to(AddProductPage())
+                text:'Xóa món',
+                onTap: ()=>Get.to(DeletePage())
             ),
           ],
         ),

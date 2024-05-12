@@ -49,7 +49,7 @@ class _AddProductPageState extends State<AddProductPage> {
       await ProductFireStore().insert(product);
 
       // Hiển thị Snackbar thông báo thành công
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Thêm sản phẩm thành công'),
         duration: Duration(seconds: 2), // Thời gian hiển thị Snackbar
       ));
@@ -64,7 +64,7 @@ class _AddProductPageState extends State<AddProductPage> {
     } catch (error) {
       print('Error adding product: $error');
       // Hiển thị Snackbar thông báo thất bại
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Thêm sản phẩm thất bại'),
         duration: Duration(seconds: 2), // Thời gian hiển thị Snackbar
       ));
@@ -203,7 +203,7 @@ class _AddProductPageState extends State<AddProductPage> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: Text(
+                    child: const Text(
                       'Thêm món',
                       style: TextStyle(
                           color: Colors.white,

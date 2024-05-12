@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Product {
@@ -6,7 +5,7 @@ class Product {
   late final String _name;
   late final int _unitPrice;
   late final String _imageUrl;
-  late final DocumentReference _categoryId;
+  late final DocumentReference? _categoryId;
 
   Product(this._id, this._name, this._unitPrice, this._imageUrl, this._categoryId);
 
@@ -17,9 +16,9 @@ class Product {
     _id = value;
   }
 
-  DocumentReference get categoryId => _categoryId;
+  DocumentReference? get categoryId => _categoryId;
 
-  set categoryId(DocumentReference value) {
+  set categoryId(DocumentReference? value) {
     _categoryId = value;
   }
 

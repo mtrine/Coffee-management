@@ -21,17 +21,21 @@ class ProductFireStore  {
       QuerySnapshot querySnapshot = await _firestore.collection(_collection).get();
       List<DocumentSnapshot> documents = querySnapshot.docs;
       for (var doc in documents) {
-        // Xây dựng một đối tượng Product từ dữ liệu của mỗi tài liệu
-        Product product = Product(doc.id, doc['name'], doc['unitPrice'], doc['image_url'], doc['categoryId']);
-
+        var data = doc.data() as Map<String, dynamic>; // Ép kiểu sang Map<String, dynamic>
+        int unitPrice = data['unitPrice'].toInt();
+        DocumentReference? categoryIdRef = data['categoryId'];
+        Product product = Product(doc.id, data['name'], unitPrice, data['image_url'], categoryIdRef);
         products.add(product);
       }
     } catch (e) {
       print('Error getting documents: $e');
+      throw e; // Rethrow để cho phép các phần khác của ứng dụng xử lý lỗi này nếu cần
     }
 
     return products;
   }
+
+
 
   @override
   Future<Product> getById(String id) {
@@ -86,7 +90,13 @@ class ProductFireStore  {
   @override
   Future<void> update(Product data) async {
     try {
-      await _firestore.collection(_collection).doc(data.id).update(data.toJson());
+      await _firestore.collection(_collection).doc(data.id).update({
+        'name': data.name,
+        'unitPrice': data.unitPrice,
+        'image_url': data.imageUrl,
+        'categoryId': data.categoryId
+      }
+      );
     } catch (e) {
       print("Error:"+e.toString());
     }

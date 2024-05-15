@@ -5,11 +5,12 @@ import 'package:qlqn/src/models/order.dart';
 import '../../firebase/orderDetail_firestore.dart';
 import '../../models/orderDetail.dart';
 import '../../models/product.dart';
-
+import '../../models/staff.dart';
 class OrderHistoryDetailPage extends StatefulWidget {
-  const OrderHistoryDetailPage({super.key, required this.orders});
+  OrderHistoryDetailPage({super.key, required this.orders,required this.staffId, required this.staffName});
   final Orders orders;
-
+  final String staffId;
+  final String staffName;
   @override
   State<OrderHistoryDetailPage> createState() => _OrderHistoryDetailPageState();
 }
@@ -102,8 +103,8 @@ class _OrderHistoryDetailPageState extends State<OrderHistoryDetailPage> {
                   ),
                   child: DataTable(
                     columnSpacing: 20,
-                    headingRowColor: WidgetStateProperty.resolveWith<Color?>(
-                          (Set<WidgetState> states) {
+                    headingRowColor: MaterialStateProperty.resolveWith<Color?>(
+                          (Set<MaterialState> states) {
                         return const Color(0xFF492803); // Màu nền cho hàng tiêu đề
                       },
                     ),
@@ -143,33 +144,49 @@ class _OrderHistoryDetailPageState extends State<OrderHistoryDetailPage> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10, 20,10, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children:[
-                    const Text(
-                      'Thời gian order:',
-                      style: TextStyle(
-                        fontSize:20,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Roboto'
-                      ),
-                      ),
-                    Text( 
-                      formatTimestamp(widget.orders.orderDate),
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: 'Secondary Family',
-                        ),
-                      ),
-                  ]
-                ),
-              )
+              TextRow(title:"Thời gian order", content: formatTimestamp(widget.orders.orderDate)),
+              TextRow(title:"Nhân viên", content:"${widget.staffName}-${widget.staffId}"),
+              TextRow(title:"Tổng tiền", content: widget.orders.total.toString()),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class TextRow extends StatelessWidget {
+   TextRow({
+    super.key,
+     required this.title,
+      required this.content,
+  });
+  String title;
+  String content;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 20,10, 0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children:[
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize:20,
+              fontWeight: FontWeight.w600,
+              fontFamily: 'Roboto'
+            ),
+            ),
+          Text(
+            content,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w400,
+              fontFamily: 'Secondary Family',
+              ),
+            ),
+        ]
       ),
     );
   }

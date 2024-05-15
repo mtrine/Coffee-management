@@ -133,7 +133,7 @@ class _OrderCardState extends State<OrderCard> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        Get.to(OrderHistoryDetailPage(orders: widget.orders));
+                        Get.to(OrderHistoryDetailPage(orders: widget.orders, staffName: staffName, staffId: staffId));
                       },
                       style: ElevatedButton.styleFrom(
                         fixedSize: const Size.fromHeight(50),

@@ -168,7 +168,7 @@ class TextRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children:[
           const Text(
-            title,
+            "",
             style: TextStyle(
               fontSize:20,
               fontWeight: FontWeight.w600,

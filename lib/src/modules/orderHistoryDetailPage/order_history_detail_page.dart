@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:qlqn/src/models/order.dart';
 import '../../firebase/orderDetail_firestore.dart';
 import '../../models/orderDetail.dart';
@@ -65,7 +66,10 @@ class _OrderHistoryDetailPageState extends State<OrderHistoryDetailPage> {
     }
     return rows;
   }
-
+  String formatTimestamp(Timestamp timestamp) {
+    DateTime date = timestamp.toDate();
+    return DateFormat('HH:mm dd/MM/yyyy').format(date);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,55 +91,66 @@ class _OrderHistoryDetailPageState extends State<OrderHistoryDetailPage> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-          child: SingleChildScrollView(
-            physics: const NeverScrollableScrollPhysics(),
-            scrollDirection: Axis.horizontal,
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minWidth: MediaQuery.of(context).size.width,
-              ),
-              child: DataTable(
-                columnSpacing: 20,
-                headingRowColor: MaterialStateProperty.resolveWith<Color?>(
-                      (Set<MaterialState> states) {
-                    return const Color(0xFF492803); // Màu nền cho hàng tiêu đề
-                  },
+          child: Column(
+            children: [
+              SingleChildScrollView(
+                physics: const NeverScrollableScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minWidth: MediaQuery.of(context).size.width,
+                  ),
+                  child: DataTable(
+                    columnSpacing: 20,
+                    headingRowColor: MaterialStateProperty.resolveWith<Color?>(
+                          (Set<MaterialState> states) {
+                        return const Color(0xFF492803); // Màu nền cho hàng tiêu đề
+                      },
+                    ),
+                    columns: const [
+                      DataColumn(
+                        label: Text(
+                          'Số lượng',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white, // Màu chữ trắng để nổi bật trên nền đen
+                          ),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          'Tên món',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      DataColumn(
+                        label: Text(
+                          'Thành tiền',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                    rows: getDataRows(),
+                  ),
                 ),
-                columns: const [
-                  DataColumn(
-                    label: Text(
-                      'Số lượng',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white, // Màu chữ trắng để nổi bật trên nền đen
-                      ),
-                    ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      'Tên món',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      'Thành tiền',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-                rows: getDataRows(),
               ),
-            ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children:[
+                  Text('Thời gian order:' ),
+                  Text( formatTimestamp(widget.orders.orderDate)),
+                ]
+              )
+            ],
           ),
         ),
       ),

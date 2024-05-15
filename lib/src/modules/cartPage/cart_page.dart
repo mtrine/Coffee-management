@@ -70,6 +70,23 @@ class _CartPageState extends State<CartPage> {
                       .toList(),
                 ),
               ),
+              TextButton(
+                  onPressed: (){
+                    widget.listOrderItem.clear();
+                    setState(() {
+                      total.value = 0;
+                    });
+                  },
+                  child: const Text(
+                    'Clear all',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Secondary Family'
+                    ),
+                  )
+              ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
                 child: ElevatedButton(

@@ -30,7 +30,7 @@ class _NoteTotalCheckOutState extends State<NoteTotalCheckOut> {
     Orders order = Orders("", staff,now,noteController.text,widget.total );
     OrderFireStore().insert(order).then((DocumentReference docRef) {
       for(var productOrder in widget.listOrderItem){
-        DocumentReference<Object?>? product = productOrder.productId;
+        DocumentReference? product = productOrder.productId;
         OrderDetail orderDetail = OrderDetail("",docRef,product,productOrder.quantity);
         OrderDetailFireStore().insert(orderDetail);
       }
@@ -61,42 +61,39 @@ class _NoteTotalCheckOutState extends State<NoteTotalCheckOut> {
                 ),
               ),
             ),
-            SizedBox(height: 20,),
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'Tổng tiền: ',
-                    style: TextStyle(
+            const SizedBox(height: 20,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Tổng tiền: ',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 25,
+                    fontFamily: 'Secondary Family',
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Text(
+                    widget.total.toString(),
+                    style: const TextStyle(
                       color: Colors.black,
                       fontSize: 25,
                       fontFamily: 'Secondary Family',
                       fontWeight: FontWeight.w500,
                     ),
-                  ),
-                  Text(
-                      widget.total.toString(),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 25,
-                        fontFamily: 'Secondary Family',
-                        fontWeight: FontWeight.w500,
-                      ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             ElevatedButton(
                 onPressed: () async{
                   if(widget.listOrderItem.isEmpty){
                     Get.snackbar('Thông báo', 'Không có sản phẩm nào trong giỏ hàng');
                     return;
                   }
-                  widget.listOrderItem.clear();
                   addOrderToFireStore();
-                  Get.to(() => OptionOrderPage(staff: widget.staff,listProtuctOrder: [],));
+
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF492803),

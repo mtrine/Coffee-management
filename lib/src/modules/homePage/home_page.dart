@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qlqn/src/models/staff.dart';
+import 'package:qlqn/src/modules/invoiceHistoryPage/invoice_history_page.dart';
 import '../../models/orderDetail.dart';
 import '../optionOrderPage/option_order_page.dart';
 import 'components/card_option.dart';
@@ -35,7 +36,8 @@ class HomePage extends StatelessWidget {
               ),
               children:[
                 CardOption(icon: Icons.edit_note,onTap: ()=>Get.to(OptionOrderPage(staff: staff,listProtuctOrder: listProtuctOrder,)),content: "ORDERS",),
-                CardOption(icon: Icons.ballot,onTap: ()=> print(staff.id),content: "INVOICE",),
+                CardOption(icon: Icons.ballot,onTap: ()=> Get.to(InvoiceHistoryPage()),content: "INVOICE",),
+                CardOption(icon: Icons.assignment_ind,onTap: ()=> Get.to(InvoiceHistoryPage()),content: "TÀI KHOẢN",),
               ]
           )
 

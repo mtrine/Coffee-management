@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:qlqn/src/firebase/staff_firestore.dart';
 
 class AuthBloc{
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -112,11 +113,27 @@ class AuthBloc{
 
       // Kiểm tra xem có người dùng nào có số điện thoại như vậy không
       if (querySnapshot.docs.isNotEmpty) {
-        // Người dùng đã tồn tại
         onError('User already exists');
       } else {
-        // Người dùng chưa tồn tại
-        await _firestore.collection('Staff').add({
+        String? lastId= await StaffFireStore().getLastDocumentId();
+        String? firstChar;
+        String? lastTwoChars;
+        String? Id;
+        if (lastId?.length == 3) {
+          firstChar = lastId?.substring(0, 1); // Ký tự đầu tiên
+          lastTwoChars =lastId?.substring(1); // Hai ký tự còn lại
+
+        } else {
+          print("Chuỗi phải có đúng 3 ký tự.");
+        }
+        int lastTwoCharsInt = int.parse(lastTwoChars!);
+        if(lastTwoCharsInt+1<9){
+          Id=firstChar!+"0"+(lastTwoCharsInt+1).toString();
+        }
+        else{
+          Id=firstChar!+(lastTwoCharsInt+1).toString();
+        }
+        await _firestore.collection('Staff').doc(Id).set({
           'fName': fname,
           'mlName': lname,
           'phone': phone,

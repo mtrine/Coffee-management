@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:qlqn/src/modules/logInAndSignUpPage/logInPage/login_page.dart';
 import '../../../bloc/auth_bloc.dart';
 import '../../../dialog/loading_dialog.dart';
 import '../../../dialog/msg_dialog.dart';
@@ -43,11 +41,11 @@ class _SignUpPageState extends State<SignUpPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 TextFieldToSignUp (content: 'Họ',hintText: 'Nhập họ',controller: _fNameController,isPassword: false,streamController: authBloc.fNameStream),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextFieldToSignUp(content: 'Tên',hintText: 'Nhập tên',controller: _mlNameController,isPassword: false,streamController: authBloc.mlNameStream),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextFieldToSignUp(content: 'SDT',hintText: 'Nhập số điện thoại',controller: _phoneController,isPassword: false,streamController: authBloc.phoneStream),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextFieldToSignUp(content: 'Ngày sinh',hintText: 'XX/YY/ZZZZ',controller: _dobController,isPassword: false,streamController: authBloc.dobStream),
                 const SizedBox(height: 10),
                 TextFieldToSignUp(content: 'Địa chỉ',hintText: 'Nhập địa chỉ',controller: _addressController,isPassword: false,streamController: authBloc.addressStream),
@@ -115,7 +113,6 @@ class _SignUpPageState extends State<SignUpPage> {
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
-
                     },
                     child: Text("Đóng"),
                   ),

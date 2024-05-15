@@ -102,5 +102,19 @@ class ProductFireStore  {
     }
   }
 
-
+  Future<Product> getProductById(DocumentReference productId) async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> doc = await _firestore.collection(_collection).doc(productId.id).get();
+      return Product(
+        doc.id,
+        doc['name'],
+        doc['unitPrice'],
+        doc['image_url'],
+        doc['categoryId'],
+      );
+    } catch (e) {
+      print("Error: $e");
+      throw e; // Ném ngoại lệ để báo lỗi nếu có
+    }
+  }
 }

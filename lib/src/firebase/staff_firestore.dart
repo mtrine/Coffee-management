@@ -20,7 +20,8 @@ class StaffFireStore implements Firestore<Staff> {
   Future<Stream<List<Staff>>> getAll() async {
     try {
       // Lắng nghe sự thay đổi trên collection 'Staff'
-      Stream<QuerySnapshot<Map<String, dynamic>>> snapshots = firestore.collection(_collection).snapshots();
+      Stream<QuerySnapshot<Map<String, dynamic>>> snapshots = firestore
+          .collection(_collection).snapshots();
 
       // Chuyển đổi dữ liệu từ các snapshot thành danh sách các đối tượng Staff
       Stream<List<Staff>> staffListStream = snapshots.map((snapshot) =>
@@ -36,7 +37,8 @@ class StaffFireStore implements Firestore<Staff> {
   @override
   Future<Staff> getById(String id) async {
     try {
-      DocumentSnapshot<Map<String, dynamic>> doc = await firestore.collection(_collection).doc(id).get();
+      DocumentSnapshot<Map<String, dynamic>> doc = await firestore.collection(
+          _collection).doc(id).get();
       return Staff.fromFirestore(doc);
     } catch (e) {
       print("Error: $e");
@@ -57,23 +59,45 @@ class StaffFireStore implements Firestore<Staff> {
   @override
   Future<void> update(Staff data) async {
     try {
-      await firestore.collection(_collection).doc(data.id).update(data.toJson());
+      await firestore.collection(_collection).doc(data.id).update(
+          data.toJson());
     } catch (e) {
       print("Error: $e");
       throw e; // Ném ngoại lệ để báo lỗi nếu có
     }
   }
 
-  Future<Staff?> getByPhone(String phone) async{
-    try{
-      QuerySnapshot<Map<String, dynamic>> querySnapshot = await firestore.collection(_collection).where('phone', isEqualTo: phone).get();
-      if(querySnapshot.docs.isNotEmpty){
+  Future<Staff?> getByPhone(String phone) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot = await firestore
+          .collection(_collection).where('phone', isEqualTo: phone).get();
+      if (querySnapshot.docs.isNotEmpty) {
         return Staff.fromFirestore(querySnapshot.docs.first);
       }
     }
-    catch(e){
+    catch (e) {
       print("Error: $e");
       throw e;
+    }
+  }
+
+  Future<String?> getLastDocumentId() async {
+    try {
+      // Lấy tất cả các document trong collection
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection(_collection)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        // Lấy document cuối cùng trong danh sách các document
+        DocumentSnapshot lastDocument = querySnapshot.docs.last;
+        String lastDocumentId = lastDocument.id;
+        return lastDocumentId;
+      } else {
+        print('Collection is empty.');
+      }
+    } catch (e) {
+      print('Error fetching last document: $e');
     }
   }
 }

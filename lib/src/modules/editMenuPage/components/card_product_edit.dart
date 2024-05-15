@@ -76,13 +76,16 @@ class CardProductEdit extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
-                child: Text(
-                  product.name,
-                  maxLines: 2,
-                  style: const TextStyle(
-                    color: Color(0xFF492803),
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
+                child: Padding(
+                  padding: const EdgeInsets.only(left:10),
+                  child: Text(
+                    product.name,
+                    maxLines: 2,
+                    style: const TextStyle(
+                      color: Color(0xFF492803),
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
               ),

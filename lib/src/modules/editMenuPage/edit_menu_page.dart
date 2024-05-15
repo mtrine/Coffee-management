@@ -36,12 +36,12 @@ class EditMenuPage extends StatelessWidget {
             ButtonEditPage(
                 icon:Icons.border_color,
                 text:'Chỉnh sửa',
-                onTap: ()=>Get.to(UpdateProductPage())
+                onTap: ()=>Get.to(const UpdateProductPage())
             ),
             ButtonEditPage(
                 icon:Icons.delete,
                 text:'Xóa món',
-                onTap: ()=>Get.to(DeletePage())
+                onTap: ()=>Get.to(const DeletePage())
             ),
           ],
         ),

@@ -12,7 +12,7 @@ class StaffFireStore implements Firestore<Staff> {
       await firestore.collection(_collection).doc(id).delete();
     } catch (e) {
       print("Error: $e");
-      throw e; // Ném ngoại lệ để báo lỗi nếu có
+      rethrow; // Ném ngoại lệ để báo lỗi nếu có
     }
   }
 
@@ -30,7 +30,7 @@ class StaffFireStore implements Firestore<Staff> {
       return staffListStream;
     } catch (e) {
       print("Error: $e");
-      throw e; // Ném ngoại lệ để báo lỗi nếu có
+      rethrow; // Ném ngoại lệ để báo lỗi nếu có
     }
   }
 
@@ -42,7 +42,7 @@ class StaffFireStore implements Firestore<Staff> {
       return Staff.fromFirestore(doc);
     } catch (e) {
       print("Error: $e");
-      throw e; // Ném ngoại lệ để báo lỗi nếu có
+      rethrow; // Ném ngoại lệ để báo lỗi nếu có
     }
   }
 
@@ -52,7 +52,7 @@ class StaffFireStore implements Firestore<Staff> {
       await firestore.collection(_collection).add(data.toJson());
     } catch (e) {
       print("Error: $e");
-      throw e; // Ném ngoại lệ để báo lỗi nếu có
+      rethrow; // Ném ngoại lệ để báo lỗi nếu có
     }
   }
 
@@ -63,7 +63,7 @@ class StaffFireStore implements Firestore<Staff> {
           data.toJson());
     } catch (e) {
       print("Error: $e");
-      throw e; // Ném ngoại lệ để báo lỗi nếu có
+      rethrow; // Ném ngoại lệ để báo lỗi nếu có
     }
   }
 
@@ -77,8 +77,9 @@ class StaffFireStore implements Firestore<Staff> {
     }
     catch (e) {
       print("Error: $e");
-      throw e;
+      rethrow;
     }
+    return null;
   }
 
   Future<String?> getLastDocumentId() async {
@@ -99,5 +100,6 @@ class StaffFireStore implements Firestore<Staff> {
     } catch (e) {
       print('Error fetching last document: $e');
     }
+    return null;
   }
 }

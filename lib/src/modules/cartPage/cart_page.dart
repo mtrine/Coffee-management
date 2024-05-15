@@ -7,8 +7,7 @@ import '../../models/staff.dart';
 import 'components/note_total_checkout.dart';
 
 class CartPage extends StatefulWidget {
-  CartPage({Key? key, required this.staff, required this.listOrderItem})
-      : super(key: key);
+  const CartPage({super.key, required this.staff, required this.listOrderItem});
 
   final List<OrderDetail> listOrderItem;
   final Staff staff;
@@ -105,7 +104,7 @@ class _CartPageState extends State<CartPage> {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF492803),
-                      fixedSize: Size(300, 50),
+                      fixedSize: const Size(300, 50),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),

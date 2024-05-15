@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF492803),
+        backgroundColor: const Color(0xFF492803),
         title: const Text('Welcome.',
           style: TextStyle(
               color: Colors.white,
@@ -36,8 +36,8 @@ class HomePage extends StatelessWidget {
               ),
               children:[
                 CardOption(icon: Icons.edit_note,onTap: ()=>Get.to(OptionOrderPage(staff: staff,listProtuctOrder: listProtuctOrder,)),content: "ORDERS",),
-                CardOption(icon: Icons.ballot,onTap: ()=> Get.to(InvoiceHistoryPage()),content: "INVOICE",),
-                CardOption(icon: Icons.assignment_ind,onTap: ()=> Get.to(InvoiceHistoryPage()),content: "TÀI KHOẢN",),
+                CardOption(icon: Icons.ballot,onTap: ()=> Get.to(const InvoiceHistoryPage()),content: "INVOICE",),
+                CardOption(icon: Icons.assignment_ind,onTap: ()=> Get.to(const InvoiceHistoryPage()),content: "TÀI KHOẢN",),
               ]
           )
 

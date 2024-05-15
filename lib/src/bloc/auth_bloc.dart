@@ -29,35 +29,35 @@ class AuthBloc{
   }
   bool isValidInfo(String fname ,String mlname,
       String phone,String dob,String address, String password,) {
-    if(fname==null||fname.length==0){
+    if(fname.isEmpty){
       _fNameController.addError('Nhập họ');
       return false;
     }
     _fNameController.sink.add('');
-    if(mlname==null||mlname.length==0){
+    if(mlname.isEmpty){
       _mlNameController.addError('Nhập họ');
       return false;
     }
     _mlNameController.sink.add('');
-    if(phone==null||phone.length==0){
+    if(phone.isEmpty){
       _phoneController.addError('Nhập SĐT');
       return false;
     }
     _phoneController.sink.add('');
 
-    if(dob==null||dob.length==0){
+    if(dob.isEmpty){
       _dobController.addError('Nhập địa chỉ');
       return false;
     }
     _dobController.sink.add('');
 
-    if(address==null||address.length==0){
+    if(address.isEmpty){
       _addressController.addError('Nhập địa chỉ');
       return false;
     }
     _addressController.sink.add('');
 
-    if (password==null|| password.length <6) {
+    if (password.length <6) {
       _passwordController.addError('Mật khẩu phải trên 5 ký tự');
       return false;
     }
@@ -119,16 +119,16 @@ class AuthBloc{
         String? firstChar;
         String? lastTwoChars;
         String? Id;
-        if (lastId?.length == 3) {
-          firstChar = lastId?.substring(0, 1); // Ký tự đầu tiên
-          lastTwoChars =lastId?.substring(1); // Hai ký tự còn lại
+        if (lastId!.length == 3) {
+          firstChar = lastId.substring(0, 1); // Ký tự đầu tiên
+          lastTwoChars =lastId.substring(1); // Hai ký tự còn lại
 
         } else {
           print("Chuỗi phải có đúng 3 ký tự.");
         }
         int lastTwoCharsInt = int.parse(lastTwoChars!);
         if(lastTwoCharsInt+1<9){
-          Id=firstChar!+"0"+(lastTwoCharsInt+1).toString();
+          Id="${firstChar!}0${lastTwoCharsInt+1}";
         }
         else{
           Id=firstChar!+(lastTwoCharsInt+1).toString();

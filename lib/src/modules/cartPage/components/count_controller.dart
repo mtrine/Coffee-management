@@ -5,7 +5,7 @@ import '../../../models/orderDetail.dart';
 class CountController extends StatefulWidget {
   final OrderDetail productOrder;
 
-  CountController({Key? key, required this.productOrder}) : super(key: key);
+  const CountController({super.key, required this.productOrder});
   @override
   _CountControllerState createState() => _CountControllerState();
 }
@@ -46,28 +46,28 @@ class _CountControllerState extends State<CountController> {
         children: [
           ElevatedButton(
             onPressed: _decrementCounter,
-            child: Text('-',style: TextStyle(fontSize: 20)),
             style: ElevatedButton.styleFrom(
-              fixedSize: Size(10, 10),
+              fixedSize: const Size(10, 10),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
               padding: EdgeInsets.zero, // Remove padding
             ),
+            child: Text('-',style: TextStyle(fontSize: 20)),
           ),
           Obx(() => Text(
             '${itemCount.value}', // Sử dụng itemCount thay cho widget.productOrder.quantity
-            style: TextStyle(fontSize: 15),
+            style: const TextStyle(fontSize: 15),
           )),
           ElevatedButton(
             onPressed: _incrementCounter,
-            child: Text('+', style: TextStyle(fontSize: 20)),
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
               padding: EdgeInsets.zero, // Remove padding
             ),
+            child: Text('+', style: TextStyle(fontSize: 20)),
           ),
         ],
       ),

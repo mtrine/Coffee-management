@@ -4,10 +4,10 @@ import 'package:flutter/widgets.dart';
 import 'package:qlqn/src/models/category.dart';
 
 class CardCategory extends StatelessWidget {
-  CardCategory({
-    Key? key,
+  const CardCategory({
+    super.key,
     required this.category,
-  }) : super(key: key);
+  });
 
   final Categories category;
 
@@ -25,12 +25,12 @@ class CardCategory extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          SizedBox(height: 5), // Khoảng cách giữa hình ảnh và văn bản
-          Container(
+          const SizedBox(height: 5), // Khoảng cách giữa hình ảnh và văn bản
+          SizedBox(
             width: 100, // Độ rộng tối đa của văn bản
             child: Text(
               category.name, // Sử dụng tên danh mục từ đối tượng Category
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20,
                 fontFamily: 'Itim',
                 fontWeight: FontWeight.w600,

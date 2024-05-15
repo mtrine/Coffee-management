@@ -10,7 +10,7 @@ class ProductFireStore  {
     try {
       await _firestore.collection(_collection).doc(id).delete();
     } catch (e) {
-      print("Error:"+e.toString());
+      print("Error:$e");
     }
   }
 
@@ -29,7 +29,7 @@ class ProductFireStore  {
       }
     } catch (e) {
       print('Error getting documents: $e');
-      throw e; // Rethrow để cho phép các phần khác của ứng dụng xử lý lỗi này nếu cần
+      rethrow; // Rethrow để cho phép các phần khác của ứng dụng xử lý lỗi này nếu cần
     }
 
     return products;
@@ -42,8 +42,8 @@ class ProductFireStore  {
     try{
       return _firestore.collection(_collection).doc(id).get().then((doc) => Product.fromFirestore(doc));
     } catch (e) {
-      print("Error:"+e.toString());
-      throw e;
+      print("Error:$e");
+      rethrow;
     }
   }
 
@@ -57,7 +57,7 @@ class ProductFireStore  {
 
       // Chuyển đổi mỗi DocumentSnapshot thành một đối tượng Product
       List<Product> products = snapshot.docs.map((doc) {
-        Map<String, dynamic> data = doc.data()!;
+        Map<String, dynamic> data = doc.data();
 
         return Product(
           doc.id,
@@ -70,7 +70,7 @@ class ProductFireStore  {
       return products;
     } catch (e) {
       print("Error: $e");
-      throw e;
+      rethrow;
     }
   }
   @override
@@ -83,7 +83,7 @@ class ProductFireStore  {
         'categoryId': data.categoryId
       });
     } catch (e) {
-      print("Error:"+e.toString());
+      print("Error:$e");
     }
   }
 
@@ -98,7 +98,7 @@ class ProductFireStore  {
       }
       );
     } catch (e) {
-      print("Error:"+e.toString());
+      print("Error:$e");
     }
   }
 
@@ -114,7 +114,7 @@ class ProductFireStore  {
       );
     } catch (e) {
       print("Error: $e");
-      throw e; // Ném ngoại lệ để báo lỗi nếu có
+      rethrow; // Ném ngoại lệ để báo lỗi nếu có
     }
   }
 }

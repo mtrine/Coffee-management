@@ -7,7 +7,7 @@ import '../../models/orderDetail.dart';
 import '../../models/product.dart';
 
 class OrderHistoryDetailPage extends StatefulWidget {
-  OrderHistoryDetailPage({super.key, required this.orders});
+  const OrderHistoryDetailPage({super.key, required this.orders});
   final Orders orders;
 
   @override
@@ -102,8 +102,8 @@ class _OrderHistoryDetailPageState extends State<OrderHistoryDetailPage> {
                   ),
                   child: DataTable(
                     columnSpacing: 20,
-                    headingRowColor: MaterialStateProperty.resolveWith<Color?>(
-                          (Set<MaterialState> states) {
+                    headingRowColor: WidgetStateProperty.resolveWith<Color?>(
+                          (Set<WidgetState> states) {
                         return const Color(0xFF492803); // Màu nền cho hàng tiêu đề
                       },
                     ),
@@ -143,12 +143,29 @@ class _OrderHistoryDetailPageState extends State<OrderHistoryDetailPage> {
                   ),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children:[
-                  Text('Thời gian order:' ),
-                  Text( formatTimestamp(widget.orders.orderDate)),
-                ]
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 20,10, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children:[
+                    const Text(
+                      'Thời gian order:',
+                      style: TextStyle(
+                        fontSize:20,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'Roboto'
+                      ),
+                      ),
+                    Text( 
+                      formatTimestamp(widget.orders.orderDate),
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Secondary Family',
+                        ),
+                      ),
+                  ]
+                ),
               )
             ],
           ),

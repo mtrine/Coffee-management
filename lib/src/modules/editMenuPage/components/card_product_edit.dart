@@ -94,7 +94,7 @@ class CardProductEdit extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF492803),
                   fixedSize: const Size(30, 60),
-                  shape: RoundedRectangleBorder(
+                  shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                       bottomRight: Radius.circular(10),
                     ),

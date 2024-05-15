@@ -7,7 +7,6 @@ import 'package:qlqn/src/models/staff.dart';
 
 import '../../../firebase/orderDetail_firestore.dart';
 import '../../../models/orderDetail.dart';
-import '../../optionOrderPage/option_order_page.dart';
 class NoteTotalCheckOut extends StatefulWidget {
   NoteTotalCheckOut({
     super.key,
@@ -97,7 +96,7 @@ class _NoteTotalCheckOutState extends State<NoteTotalCheckOut> {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF492803),
-                  fixedSize: Size(300, 50),
+                  fixedSize: const Size(300, 50),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),

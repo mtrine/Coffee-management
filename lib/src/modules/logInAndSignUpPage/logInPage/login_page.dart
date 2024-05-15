@@ -8,7 +8,7 @@ import '../../../my_app.dart';
 import '../../homePage/home_page.dart';
 
 class LogInPage extends StatefulWidget {
-  LogInPage({Key? key}) : super(key: key);
+  LogInPage({super.key});
   List<OrderDetail> listProtuctOrder =[];
   @override
   _LogInPageState createState() => _LogInPageState();
@@ -22,7 +22,7 @@ class _LogInPageState extends State<LogInPage> {
 
   @override
   Widget build(BuildContext context) {
-    void _onSignInClick() async {
+    void onSignInClick() async {
       final String phone = _phoneController.text;
       final String password = _passwordController.text;
       final Staff? staff = await Staff.getByPhone(phone); // Sử dụng phương thức getByPhone
@@ -87,29 +87,29 @@ class _LogInPageState extends State<LogInPage> {
                       },
                       icon: Icon(
                         _isPasswordObscured ?Icons.visibility  :Icons.visibility_off ,
-                        color: Color(0xFF492803),
+                        color: const Color(0xFF492803),
                       ),
                     ),
-                    prefixIcon: Icon(Icons.key, color: Color(0xFF492803)),
+                    prefixIcon: const Icon(Icons.key, color: Color(0xFF492803)),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: Color(0xFF492803), width: 2.0),
+                      borderSide: const BorderSide(color: Color(0xFF492803), width: 2.0),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: Color(0xFF492803), width: 2.0),
+                      borderSide: const BorderSide(color: Color(0xFF492803), width: 2.0),
                     ),
                     errorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide(color: Colors.red, width: 2.0),
+                      borderSide: const BorderSide(color: Colors.red, width: 2.0),
                     ),
                   ),
               ),
               const SizedBox(height: 40),
               ElevatedButton(
-                onPressed: _onSignInClick,
+                onPressed: onSignInClick,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF492803),
+                  backgroundColor: const Color(0xFF492803),
                   fixedSize: const Size(250, 50),
                 ),
                 child: const Text(

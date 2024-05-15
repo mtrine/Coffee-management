@@ -3,7 +3,7 @@ import 'package:qlqn/src/modules/logInAndSignUpPage/logInPage/login_page.dart';
 import 'package:qlqn/src/modules/logInAndSignUpPage/signUpPage/signUpPage.dart';
 
 class LogInAndSignUpPage extends StatelessWidget {
-  const LogInAndSignUpPage({Key? key});
+  const LogInAndSignUpPage({super.key});
 
   @override
   Widget build(BuildContext context) {

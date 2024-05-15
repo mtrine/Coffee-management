@@ -5,7 +5,7 @@ import '../../../dialog/msg_dialog.dart';
 import 'components/textfield_to_signup.dart';
 
 class SignUpPage extends StatefulWidget {
-  SignUpPage({super.key});
+  const SignUpPage({super.key});
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
@@ -14,17 +14,17 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   AuthBloc authBloc = AuthBloc();
 
-  TextEditingController _fNameController = TextEditingController();
+  final TextEditingController _fNameController = TextEditingController();
 
-  TextEditingController _mlNameController = TextEditingController();
+  final TextEditingController _mlNameController = TextEditingController();
 
-  TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
 
-  TextEditingController _dobController = TextEditingController();
+  final TextEditingController _dobController = TextEditingController();
 
-  TextEditingController _addressController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
 
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   void dispose() {
@@ -107,14 +107,14 @@ class _SignUpPageState extends State<SignUpPage> {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: Text("Đăng ký thành công"),
-                content: Text("Chúc mừng! Bạn đã đăng ký thành công."),
+                title: const Text("Đăng ký thành công"),
+                content: const Text("Chúc mừng! Bạn đã đăng ký thành công."),
                 actions: [
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: Text("Đóng"),
+                    child: const Text("Đóng"),
                   ),
                 ],
               );

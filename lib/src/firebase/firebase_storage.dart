@@ -32,7 +32,7 @@ class StorageService {
       return downloadUrl;
     } catch (e) {
       print('Error uploading file: $e');
-      throw e; // Rethrow để cho phép các phần khác của ứng dụng xử lý lỗi này nếu cần
+      rethrow; // Rethrow để cho phép các phần khác của ứng dụng xử lý lỗi này nếu cần
     }
   }
 
@@ -47,7 +47,7 @@ class StorageService {
       print('Image deleted successfully!');
     } catch (e) {
       print('Error deleting image: $e');
-      throw e; // Rethrow để cho phép các phần khác của ứng dụng xử lý lỗi này nếu cần
+      rethrow; // Rethrow để cho phép các phần khác của ứng dụng xử lý lỗi này nếu cần
     }
   }
 }

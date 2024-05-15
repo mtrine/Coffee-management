@@ -4,7 +4,7 @@ import '../../../firebase/product_firestore.dart';
 import '../../../models/product.dart';
 import '../components/card_product_edit.dart';
 class UpdateProductPage extends StatefulWidget {
-  const UpdateProductPage({Key? key}) : super(key: key);
+  const UpdateProductPage({super.key});
 
   @override
   State<UpdateProductPage> createState() => _UpdateProductPageState();
@@ -53,7 +53,7 @@ class _UpdateProductPageState extends State<UpdateProductPage> {
               padding: const EdgeInsets.all(20.0),
               child: GridView(
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.zero,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,

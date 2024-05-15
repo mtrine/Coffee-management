@@ -21,7 +21,7 @@ class _InvoiceHistoryPageState extends State<InvoiceHistoryPage> {
     OrderFireStore orderFireStore = OrderFireStore();
     List<Orders> orderList = await orderFireStore.getAllDocument();
     setState(() {
-      this.orederList = orderList;
+      orederList = orderList;
     });
   }
   @override

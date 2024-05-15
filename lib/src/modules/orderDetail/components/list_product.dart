@@ -19,7 +19,7 @@ class ListProduct extends StatelessWidget {
         padding: const EdgeInsets.all(20.0),
         child:  GridView(
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           padding: EdgeInsets.zero,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,

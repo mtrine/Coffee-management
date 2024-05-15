@@ -22,8 +22,8 @@ class TextFieldToSignUp extends StatelessWidget {
       builder: (context, snapshot) {
         return Row(
           children: [
-            Text(content, style: TextStyle(color: Color(0xFF492803),fontSize: 20,fontWeight: FontWeight.w400)),
-            SizedBox(width: 10),
+            Text(content, style: const TextStyle(color: Color(0xFF492803),fontSize: 20,fontWeight: FontWeight.w400)),
+            const SizedBox(width: 10),
             Expanded(
               child: TextField(
                 controller: controller,

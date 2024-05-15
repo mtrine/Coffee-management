@@ -172,7 +172,7 @@ class _CardModelUpdateState extends State<CardModelUpdate> {
                       value: category.name,
                       child: Text(category.name),
                     );
-                  }).toList(),
+                  }),
                 ],
                 onChanged: (value) {
                   FdropDownValue(value);

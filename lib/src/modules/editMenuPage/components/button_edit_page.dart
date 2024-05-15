@@ -28,9 +28,9 @@ class ButtonEditPage extends StatelessWidget {
               Container(
                 child:  Row(
                   children: [
-                    Icon(icon,color: Color(0xFF492803),size:30),
+                    Icon(icon,color: const Color(0xFF492803),size:30),
                     Padding(
-                      padding: EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: Text(
                         text,
                         style: const TextStyle(

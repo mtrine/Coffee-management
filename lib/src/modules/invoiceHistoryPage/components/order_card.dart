@@ -33,8 +33,8 @@ class _OrderCardState extends State<OrderCard> {
     String? name = await orderFireStore.getNameStaff(widget.orders.staffId);
     String id = widget.orders.staffId.id;
     setState(() {
-      this.staffName = name!;
-      this.staffId = id;
+      staffName = name!;
+      staffId = id;
     });
   }
 
@@ -136,8 +136,8 @@ class _OrderCardState extends State<OrderCard> {
                         Get.to(OrderHistoryDetailPage(orders: widget.orders));
                       },
                       style: ElevatedButton.styleFrom(
-                        fixedSize: Size.fromHeight(50),
-                        backgroundColor: Color(0xFF492803),
+                        fixedSize: const Size.fromHeight(50),
+                        backgroundColor: const Color(0xFF492803),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),

@@ -13,7 +13,7 @@ Future<void> main() async {
   );
   runApp(MyApp(
       AuthBloc(),
-      GetMaterialApp(
+      const GetMaterialApp(
         debugShowCheckedModeBanner: false,
         home: LogInAndSignUpPage(),
       )));

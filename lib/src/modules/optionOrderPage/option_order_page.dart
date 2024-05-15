@@ -10,7 +10,7 @@ import 'components/card_category.dart';
 import 'package:get/get.dart';
 
 class OptionOrderPage extends StatefulWidget {
-  OptionOrderPage({Key? key, required this.staff,required this.listProtuctOrder}) : super(key: key);
+  OptionOrderPage({super.key, required this.staff,required this.listProtuctOrder});
   Staff staff;
   List<OrderDetail> listProtuctOrder ;
   @override
@@ -24,7 +24,7 @@ class _OptionOrderPageState extends State<OptionOrderPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffe6e0c7),
+      backgroundColor: const Color(0xffe6e0c7),
       appBar: AppBar(
         backgroundColor: const Color(0xFF492803),
         title: const Text(
@@ -83,13 +83,13 @@ class _OptionOrderPageState extends State<OptionOrderPage> {
             const SizedBox(height: 5), // Khoảng cách giữa ListView và nút
             ElevatedButton(
               onPressed: (){
-                Get.to(EditMenuPage());
+                Get.to(const EditMenuPage());
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF492803),
-                fixedSize: Size(250, 50),
+                backgroundColor: const Color(0xFF492803),
+                fixedSize: const Size(250, 50),
               ),
-              child: Text(
+              child: const Text(
                 'Chỉnh sửa menu',
                 style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 20),
               ),
@@ -101,9 +101,9 @@ class _OptionOrderPageState extends State<OptionOrderPage> {
               height: 50,
               decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(color: Color(0xFF492803), width: 2),
+                border: Border.all(color: const Color(0xFF492803), width: 2),
               ),
-              child: Text('Best Seller', style: TextStyle(color: Color(0xFF492803), fontSize: 20, fontWeight: FontWeight.w600, fontFamily: 'Second Family')),
+              child: const Text('Best Seller', style: TextStyle(color: Color(0xFF492803), fontSize: 20, fontWeight: FontWeight.w600, fontFamily: 'Second Family')),
             )
           ],
         ),

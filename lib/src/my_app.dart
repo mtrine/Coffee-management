@@ -3,9 +3,10 @@ import 'bloc/auth_bloc.dart';
 
 class MyApp extends InheritedWidget {
   final AuthBloc authBloc;
+  @override
   final Widget child;
 
-  MyApp(this.authBloc, this.child) : super(child: child);
+  const MyApp(this.authBloc, this.child, {super.key}) : super(child: child);
 
   @override
   bool updateShouldNotify(covariant InheritedWidget oldWidget) {

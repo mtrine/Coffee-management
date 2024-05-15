@@ -12,7 +12,7 @@ import 'components/textfield_add_product.dart';
 
 
 class AddProductPage extends StatefulWidget {
-   AddProductPage({super.key});
+   const AddProductPage({super.key});
 
   @override
   State<AddProductPage> createState() => _AddProductPageState();
@@ -109,7 +109,7 @@ class _AddProductPageState extends State<AddProductPage> {
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white70,
-                        fixedSize: Size(200, 200),
+                        fixedSize: const Size(200, 200),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -179,7 +179,7 @@ class _AddProductPageState extends State<AddProductPage> {
                                 value: category.name,
                                 child: Text(category.name),
                               );
-                            }).toList(),
+                            }),
                           ],
                           onChanged: (value) {
                             FdropDownValue(value);

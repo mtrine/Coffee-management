@@ -13,7 +13,7 @@ class OrderDetailFireStore {
       await _firestore.collection(_collection).doc(id).delete();
     } catch (e) {
       print("Error: $e");
-      throw e; // Ném ngoại lệ để báo lỗi nếu có
+      rethrow; // Ném ngoại lệ để báo lỗi nếu có
     }
   }
 
@@ -30,7 +30,7 @@ class OrderDetailFireStore {
       return orderDetailListStream;
     } catch (e) {
       print("Error: $e");
-      throw e; // Ném ngoại lệ để báo lỗi nếu có
+      rethrow; // Ném ngoại lệ để báo lỗi nếu có
     }
   }
 
@@ -41,7 +41,7 @@ class OrderDetailFireStore {
       return OrderDetail.fromFirestore(doc);
     } catch (e) {
       print("Error: $e");
-      throw e; // Ném ngoại lệ để báo lỗi nếu có
+      rethrow; // Ném ngoại lệ để báo lỗi nếu có
     }
   }
 
@@ -55,7 +55,7 @@ class OrderDetailFireStore {
       );
     } catch (e) {
       print("Error: $e");
-      throw e; // Ném ngoại lệ để báo lỗi nếu có
+      rethrow; // Ném ngoại lệ để báo lỗi nếu có
     }
   }
 
@@ -65,7 +65,7 @@ class OrderDetailFireStore {
       await _firestore.collection(_collection).doc(data.id).update(data.toJson());
     } catch (e) {
       print("Error: $e");
-      throw e; // Ném ngoại lệ để báo lỗi nếu có
+      rethrow; // Ném ngoại lệ để báo lỗi nếu có
     }
   }
   Future<List<OrderDetail>> getListOrderDetailByOrderId(DocumentReference? orderId) async {
@@ -84,7 +84,7 @@ class OrderDetailFireStore {
       return orderDetails;
     } catch (e) {
       print("Error: $e");
-      throw e; // Ném ngoại lệ để báo lỗi nếu có
+      rethrow; // Ném ngoại lệ để báo lỗi nếu có
     }
   }
   Future<List<Product>> getProductById(List<OrderDetail> orderDetails) async {
@@ -104,7 +104,7 @@ class OrderDetailFireStore {
 
     } catch (e) {
       print("Error: $e");
-      throw e; // Ném ngoại lệ để báo lỗi nếu có
+      rethrow; // Ném ngoại lệ để báo lỗi nếu có
     }
   }
 }

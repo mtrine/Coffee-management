@@ -12,7 +12,7 @@ class CategoryFireStore  {
       await _firestore.collection(_collection).doc(id).delete();
     } catch (e) {
       print("Error: $e");
-      throw e;
+      rethrow;
     }
   }
 
@@ -25,7 +25,7 @@ class CategoryFireStore  {
       return categoryListStream;
     } catch (e) {
       print("Error: $e");
-      throw e;
+      rethrow;
     }
   }
 
@@ -36,7 +36,7 @@ class CategoryFireStore  {
       return Categories.fromFirestore(doc);
     } catch (e) {
       print("Error: $e");
-      throw e;
+      rethrow;
     }
   }
 
@@ -46,7 +46,7 @@ class CategoryFireStore  {
       await _firestore.collection(_collection).add(data.toJson());
     } catch (e) {
       print("Error: $e");
-      throw e;
+      rethrow;
     }
   }
 
@@ -56,7 +56,7 @@ class CategoryFireStore  {
       await _firestore.collection(_collection).doc(data.id).update(data.toJson());
     } catch (e) {
       print("Error: $e");
-      throw e;
+      rethrow;
     }
   }
 

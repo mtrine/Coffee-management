@@ -8,7 +8,7 @@ class LoadingDialog {
         builder: (context) => AlertDialog(
               content: Row(
                 children: [
-                  CircularProgressIndicator(),
+                  const CircularProgressIndicator(),
                   Padding(
                     padding: const EdgeInsets.only(left: 16),
                     child: Text(msg),

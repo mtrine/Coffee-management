@@ -28,7 +28,7 @@ class OrderFireStore  {
       }
     } catch (e) {
       print('Error getting documents: $e');
-      throw e; // Rethrow để cho phép các phần khác của ứng dụng xử lý lỗi này nếu cần
+      rethrow; // Rethrow để cho phép các phần khác của ứng dụng xử lý lỗi này nếu cần
     }
 
     return products;

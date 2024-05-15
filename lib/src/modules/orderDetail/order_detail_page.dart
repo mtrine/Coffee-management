@@ -8,7 +8,7 @@ import 'components/list_product.dart';
 class OrderDeatilPage extends StatelessWidget {
   final Categories categories;
   List<OrderDetail> listProtuctOrder;
- OrderDeatilPage({Key? key, required this.categories, required this.listProtuctOrder}) : super(key: key);
+ OrderDeatilPage({super.key, required this.categories, required this.listProtuctOrder});
 
   @override
   Widget build(BuildContext context) {

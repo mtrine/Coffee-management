@@ -26,7 +26,7 @@ class CardItemOder extends StatelessWidget {
       return product;
     }catch(e){
       print(e);
-      throw e; // Ném lại lỗi để có thể xử lý ngoại lệ ở nơi gọi hàm này
+      rethrow; // Ném lại lỗi để có thể xử lý ngoại lệ ở nơi gọi hàm này
     }
   }
 

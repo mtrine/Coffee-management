@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:qlqn/src/firebase/firestore.dart';
+
 import 'package:qlqn/src/models/product.dart';
 class ProductFireStore  {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -37,7 +37,7 @@ class ProductFireStore  {
 
 
 
-  @override
+  
   Future<Product> getById(String id) {
     try{
       return _firestore.collection(_collection).doc(id).get().then((doc) => Product.fromFirestore(doc));
@@ -73,7 +73,7 @@ class ProductFireStore  {
       rethrow;
     }
   }
-  @override
+ 
   Future<void> insert(Product data) async {
     try {
       await _firestore.collection(_collection).add({
@@ -87,7 +87,7 @@ class ProductFireStore  {
     }
   }
 
-  @override
+  
   Future<void> update(Product data) async {
     try {
       await _firestore.collection(_collection).doc(data.id).update({

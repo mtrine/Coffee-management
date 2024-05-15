@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:qlqn/src/firebase/firestore.dart';
 import 'package:qlqn/src/models/orderDetail.dart';
 import 'package:qlqn/src/models/product.dart';
 
@@ -59,7 +58,6 @@ class OrderDetailFireStore {
     }
   }
 
-  @override
   Future<void> update(OrderDetail data) async {
     try {
       await _firestore.collection(_collection).doc(data.id).update(data.toJson());

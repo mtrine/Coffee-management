@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:qlqn/src/firebase/firebase_storage.dart';
 import '../../../firebase/product_firestore.dart';

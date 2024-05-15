@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:qlqn/src/models/order.dart';
+import 'package:qlqn/src/modules/orderHistoryDetailPage/components/text_row.dart';
 import '../../firebase/orderDetail_firestore.dart';
 import '../../models/orderDetail.dart';
 import '../../models/product.dart';
-import '../../models/staff.dart';
 class OrderHistoryDetailPage extends StatefulWidget {
   OrderHistoryDetailPage({super.key, required this.orders,required this.staffId, required this.staffName});
   final Orders orders;
@@ -80,7 +80,7 @@ class _OrderHistoryDetailPageState extends State<OrderHistoryDetailPage> {
           'Chi tiết hóa đơn',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 35.0,
+            fontSize: 30.0,
             fontWeight: FontWeight.w500,
             fontStyle: FontStyle.italic,
             fontFamily: 'Lora',
@@ -155,39 +155,4 @@ class _OrderHistoryDetailPageState extends State<OrderHistoryDetailPage> {
   }
 }
 
-class TextRow extends StatelessWidget {
-  TextRow({
-    super.key,
-    required this.title,
-    required this.content,
-  });
-  String title;
-  String content;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 20,10, 0),
-      child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children:[
-            Text(
-              title,
-              style: const TextStyle(
-                  fontSize:20,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: 'Roboto'
-              ),
-            ),
-            Text(
-              content,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w400,
-                fontFamily: 'Secondary Family',
-              ),
-            ),
-          ]
-      ),
-    );
-  }
-}
+

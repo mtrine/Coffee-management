@@ -86,7 +86,7 @@ class _LogInPageState extends State<LogInPage> {
                         });
                       },
                       icon: Icon(
-                        _isPasswordObscured ?Icons.visibility  :Icons.visibility_off ,
+                        _isPasswordObscured ?Icons.visibility_off :Icons.visibility  ,
                         color: const Color(0xFF492803),
                       ),
                     ),

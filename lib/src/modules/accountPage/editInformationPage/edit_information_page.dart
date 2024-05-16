@@ -51,7 +51,7 @@ class _EditInformationPageState extends State<EditInformationPage> {
       _addressController.text,
       _dobController.text,
     );
-    staffFireStore.update(staff);
+    staffFireStore.updateInformation(staff);
     Get.back(result: true);
   }
 

@@ -39,7 +39,7 @@ class StaffFireStore {
   }
 
   
-  Future<void> update(Staff data) async {
+  Future<void> updateInformation(Staff data) async {
     try {
       await firestore.collection(_collection).doc(data.id).update({
         'fName':data.fname,

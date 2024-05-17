@@ -157,14 +157,13 @@ class AuthBloc {
       return false;
     }
     _oldPasswordController.sink.add('');
-
-    if (oldPassword.isEmpty) {
+    if (oldPassword=='') {
       _oldPasswordController.addError('Nhập mật khẩu cũ');
       return false;
     }
     _oldPasswordController.sink.add('');
 
-    if (newPassword.length < 6) {
+    if (newPassword.isEmpty||newPassword.length < 6) {
       _newPasswordController.addError('Mật khẩu phải hơn 6 ký tự');
       return false;
     }
@@ -175,7 +174,6 @@ class AuthBloc {
       return false;
     }
     _newPasswordController.sink.add('');
-
     if (confirmPassword.isEmpty || confirmPassword != newPassword) {
       _confirmPasswordController.addError('Mật khẩu không khớp');
       return false;

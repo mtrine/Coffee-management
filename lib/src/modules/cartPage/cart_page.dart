@@ -18,7 +18,7 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   var total;
-
+  bool isCheckOut = false;
   @override
   void initState() {
     super.initState();
@@ -35,28 +35,12 @@ class _CartPageState extends State<CartPage> {
     return total.value = newtotal;
   }
 
-  Future<void> _navigateToCheckOut() async {
-    var newTotal= await calculateTotal();
-    final result = await showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      isScrollControlled: true,
-      builder: (BuildContext context) {
-        return NoteTotalCheckOut(
-          total: newTotal,
-          staff: widget.staff,
-          listOrderItem: widget.listOrderItem,);
-      },
-    );
-
-    if (result == true) {
-      setState(() {
-        widget.listOrderItem.clear();
-        total.value = 0;
-      });
-    }
+  Future<void> _fetchData() async {
+    print('Thanh toán nè');
+    setState(() {
+      widget.listOrderItem.clear();
+      total.value = 0;
+    });
   }
 
   void _handleDelete(DocumentReference productId) {
@@ -120,7 +104,26 @@ class _CartPageState extends State<CartPage> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
                 child: ElevatedButton(
-                    onPressed: _navigateToCheckOut,
+                    onPressed:() async{
+                      var newTotal= await calculateTotal();
+                      showModalBottomSheet(
+                        context: context,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                        ),
+                        isScrollControlled: true,
+                        builder:(BuildContext context) {
+                          return  NoteTotalCheckOut(
+                            total: newTotal,
+                            staff: widget.staff,
+                            listOrderItem: widget.listOrderItem,
+                            onCheckOut: () {
+                              _fetchData();
+                            },
+                          );
+                        },
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF492803),
                       fixedSize: const Size(300, 50),

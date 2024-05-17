@@ -13,9 +13,11 @@ class NoteTotalCheckOut extends StatefulWidget {
     required this.staff,
     required this.total,
     required this.listOrderItem,
+    required this.onCheckOut,
   });
   Staff staff;
   var total;
+  Function onCheckOut;
   final List<OrderDetail> listOrderItem;
   @override
   State<NoteTotalCheckOut> createState() => _NoteTotalCheckOutState();
@@ -23,14 +25,16 @@ class NoteTotalCheckOut extends StatefulWidget {
 
 class _NoteTotalCheckOutState extends State<NoteTotalCheckOut> {
   TextEditingController noteController = TextEditingController();
-  Future<void> addOrderToFireStore() async {
+  Future<void> addOrderToFireStore()async {
     Timestamp now = Timestamp.now();
     DocumentReference staff = FirebaseFirestore.instance.collection('Staff').doc(widget.staff.id);
     Orders order = Orders("", staff,now,noteController.text,widget.total );
-    OrderFireStore().insert(order).then((DocumentReference docRef) {
+    await OrderFireStore().insert(order).then((DocumentReference docRef) {
+      print(widget.listOrderItem.length);
       for(var productOrder in widget.listOrderItem){
         DocumentReference? product = productOrder.productId;
         OrderDetail orderDetail = OrderDetail("",docRef,product,productOrder.quantity);
+        print(orderDetail.toString());
         OrderDetailFireStore().insert(orderDetail);
       }
     });
@@ -93,8 +97,8 @@ class _NoteTotalCheckOutState extends State<NoteTotalCheckOut> {
                   return;
                 }
                 await addOrderToFireStore();
-                widget.listOrderItem.clear();
-                Get.back(result: true); // Pass result to previous page
+                Get.back(result: true);
+                await widget.onCheckOut();
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF492803),

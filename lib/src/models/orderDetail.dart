@@ -49,4 +49,9 @@ class OrderDetail {
       data['quantity'],
     );
   }
+
+  @override
+  String toString() {
+    return 'OrderDetail{_id: $_id, _orderId: $_orderId, _productId: $_productId, _quantity: $_quantity}';
+  }
 }

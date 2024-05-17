@@ -36,7 +36,7 @@ class _CountControllerState extends State<CountController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 137,
+      width: 150,
       height: 35,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -55,9 +55,11 @@ class _CountControllerState extends State<CountController> {
             ),
             child: Text('-',style: TextStyle(fontSize: 20)),
           ),
-          Obx(() => Text(
-            '${itemCount.value}', // Sử dụng itemCount thay cho widget.productOrder.quantity
-            style: const TextStyle(fontSize: 15),
+          Obx(() => Expanded(
+            child: Text(
+              '${itemCount.value}', // Sử dụng itemCount thay cho widget.productOrder.quantity
+              style: const TextStyle(fontSize: 15),
+            ),
           )),
           ElevatedButton(
             onPressed: _incrementCounter,

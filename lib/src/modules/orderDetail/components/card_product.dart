@@ -4,7 +4,7 @@ import 'package:qlqn/src/models/product.dart';
 
 import '../../../models/orderDetail.dart';
 
-class CardProduct extends StatelessWidget {
+class CardProduct extends StatefulWidget {
   CardProduct({
     super.key,
     required this.product,
@@ -13,18 +13,45 @@ class CardProduct extends StatelessWidget {
   Product product;
   List<OrderDetail> listProtuctOrder;
 
+  @override
+  State<CardProduct> createState() => _CardProductState();
+}
+
+class _CardProductState extends State<CardProduct> {
   void addProductToOrder(){
-    try{
+    try {
+      // Create a DocumentReference for the product
       DocumentReference documentReference =
-      FirebaseFirestore.instance.collection('Product').doc(product.id);
-      OrderDetail orderDetail = OrderDetail(
-       "",null,documentReference,1
-      );
-      listProtuctOrder.add(orderDetail);
-    }catch(e){
+      FirebaseFirestore.instance.collection('Product').doc(widget.product.id);
+
+      // Check if the product is already in the list
+      bool productExists = widget.listProtuctOrder.any((orderDetail) {
+        return orderDetail.productId == documentReference;
+      });
+
+      // If the product is not in the list, add it
+      if (!productExists) {
+        OrderDetail orderDetail = OrderDetail(
+            "", null, documentReference, 1
+        );
+        widget.listProtuctOrder.add(orderDetail);
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('${widget.product.name} đã thêm vào giỏ hàng'))
+        );
+      } else {
+        // If the product is already in the list, show a notification
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content: Text('${widget.product.name} đã có trong giỏ hàng'),
+                backgroundColor: Colors.red
+            )
+        );
+      }
+    } catch (e) {
       print(e);
     }
-}
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -44,7 +71,7 @@ class CardProduct extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(0),
               child: Image.network(
-                product.imageUrl,
+                widget.product.imageUrl,
                 width: 150,
                 height: 99,
                 fit: BoxFit.cover,
@@ -68,7 +95,7 @@ class CardProduct extends StatelessWidget {
               ),
             ),
             child: Text(
-              product.unitPrice.toString() ,
+              widget.product.unitPrice.toString() ,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 color: Color(0xFF492803),
@@ -82,7 +109,7 @@ class CardProduct extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  product.name,
+                  widget.product.name,
                   maxLines: 2,
                   style: const TextStyle(
                     color: Color(0xFF492803),

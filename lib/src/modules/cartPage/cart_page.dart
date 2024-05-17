@@ -35,6 +35,30 @@ class _CartPageState extends State<CartPage> {
     return total.value = newtotal;
   }
 
+  Future<void> _navigateToCheckOut() async {
+    var newTotal= await calculateTotal();
+    final result = await showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return NoteTotalCheckOut(
+          total: newTotal,
+          staff: widget.staff,
+          listOrderItem: widget.listOrderItem,);
+      },
+    );
+
+    if (result == true) {
+      setState(() {
+        widget.listOrderItem.clear();
+        total.value = 0;
+      });
+    }
+  }
+
   void _handleDelete(DocumentReference productId) {
     setState(() {
       widget.listOrderItem.removeWhere((item) => item.productId == productId);
@@ -62,7 +86,14 @@ class _CartPageState extends State<CartPage> {
           child: Column(
             children: [
               Expanded(
-                child: ListView(
+                child: widget.listOrderItem.isEmpty
+                    ? const Center(
+                  child: Text(
+                    'Giỏ hàng của bạn đang trống',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                  ),
+                )
+                    : ListView(
                   shrinkWrap: true,
                   children: widget.listOrderItem
                       .map((e) => CardItemOder(handleDelete: _handleDelete,productOrder: e, total: total))
@@ -89,19 +120,7 @@ class _CartPageState extends State<CartPage> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
                 child: ElevatedButton(
-                    onPressed: ()async{
-                      var newTotal= await calculateTotal();
-                      showModalBottomSheet(
-                        context: context,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-                        ),
-                        isScrollControlled: true,
-                        builder: (BuildContext context) {
-                          return NoteTotalCheckOut(total: newTotal, staff: widget.staff,listOrderItem: widget.listOrderItem,);
-                        },
-                      );
-                    },
+                    onPressed: _navigateToCheckOut,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF492803),
                       fixedSize: const Size(300, 50),

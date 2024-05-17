@@ -6,8 +6,10 @@ class CardProductBestSeller extends StatelessWidget {
   CardProductBestSeller({
     super.key,
     required this.product,
+    required this.addProductToOrder,
   });
   Product product;
+  Function addProductToOrder;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -45,7 +47,7 @@ class CardProductBestSeller extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      product.unitPrice.toString() + ' VND',
+                      '${product.unitPrice} VND',
                       style: const TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.w400,
@@ -65,9 +67,9 @@ class CardProductBestSeller extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-
+                  addProductToOrder(product);
                 },
-                icon: const Icon(Icons.add, color: Colors.black, size: 40),
+                icon: const Icon(Icons.add, color: Colors.black, size: 30),
               ),
             ),
           ],

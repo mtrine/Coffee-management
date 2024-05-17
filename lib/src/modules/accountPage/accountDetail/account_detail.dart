@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qlqn/src/models/staff.dart';
 import 'package:qlqn/src/modules/accountPage/changePasswordPage/change_password_page.dart';
-import 'package:qlqn/src/modules/logInAndSignUpPage/logInPage/login_page.dart';
+import 'package:qlqn/src/modules/logInAndSignUpPage/login_and_signup.dart';
 
 import '../components/ButtonAccountPage.dart';
 
@@ -31,7 +31,7 @@ class AccountDetailPage extends StatelessWidget {
         child: Column(
           children: [
              ButtonAccountPage( text: "Đổi mật khẩu", onTap: ()=>Get.to(ChangePasswordPage(staff: staff,))),
-             ButtonAccountPage( text: "Đăng xuất", onTap: ()=>Get.to(LogInPage())),
+             ButtonAccountPage( text: "Đăng xuất", onTap: ()=>Get.to(const LogInAndSignUpPage())),
         ],
         )
       ),

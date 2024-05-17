@@ -36,6 +36,41 @@ class _OptionOrderPageState extends State<OptionOrderPage> {
       this.listProduct = listProduct;
     });
   }
+
+  void addProductToOrder(Product product){
+    try {
+      // Create a DocumentReference for the product
+      DocumentReference documentReference =
+      FirebaseFirestore.instance.collection('Product').doc(product.id);
+
+      // Check if the product is already in the list
+      bool productExists = widget.listProtuctOrder.any((orderDetail) {
+        return orderDetail.productId == documentReference;
+      });
+
+      // If the product is not in the list, add it
+      if (!productExists) {
+        OrderDetail orderDetail = OrderDetail(
+            "", null, documentReference, 1
+        );
+        widget.listProtuctOrder.add(orderDetail);
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('${product.name} đã thêm vào giỏ hàng'))
+        );
+      } else {
+        // If the product is already in the list, show a notification
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content: Text('${product.name} đã có trong giỏ hàng'),
+                backgroundColor: Colors.red
+            )
+        );
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,7 +123,11 @@ class _OptionOrderPageState extends State<OptionOrderPage> {
                       );
                       return GestureDetector(
                         onTap: () {
-                          Get.to(OrderDeatilPage(categories: categories, listProtuctOrder: widget.listProtuctOrder));
+                          Get.to(OrderDeatilPage(
+                              categories: categories,
+                              listProtuctOrder: widget.listProtuctOrder
+                          )
+                          );
                         },
                         child: CardCategory(category: categories),
                       );
@@ -108,7 +147,11 @@ class _OptionOrderPageState extends State<OptionOrderPage> {
               ),
               child: const Text(
                 'Chỉnh sửa menu',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 20),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20
+                ),
               ),
             ),
             const SizedBox(height: 20),
@@ -120,12 +163,25 @@ class _OptionOrderPageState extends State<OptionOrderPage> {
                 color: Colors.white,
                 border: Border.all(color: const Color(0xFF492803), width: 2),
               ),
-              child: const Text('Best Seller', style: TextStyle(color: Color(0xFF492803), fontSize: 20, fontWeight: FontWeight.w600, fontFamily: 'Second Family')),
+              child: const Text(
+                  'Best Seller',
+                  style: TextStyle(
+                      color: Color(0xFF492803),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Second Family'
+                  )
+              ),
             ),
             const SizedBox(height: 10),
             Expanded(
               child: ListView(
-                children: listProduct.map((product) => CardProductBestSeller(product: product)).toList(),
+                children: listProduct.map(
+                        (product) => CardProductBestSeller(
+                          product: product,
+                          addProductToOrder:addProductToOrder,
+                        )
+                ).toList(),
               ),
             ),
           ],

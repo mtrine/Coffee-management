@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:qlqn/src/firebase/order_firestore.dart';
 import 'package:qlqn/src/models/order.dart';
 import 'package:qlqn/src/models/staff.dart';
-
 import '../../../firebase/orderDetail_firestore.dart';
 import '../../../models/orderDetail.dart';
 
@@ -24,7 +23,7 @@ class NoteTotalCheckOut extends StatefulWidget {
 
 class _NoteTotalCheckOutState extends State<NoteTotalCheckOut> {
   TextEditingController noteController = TextEditingController();
-  void addOrderToFireStore(){
+  Future<void> addOrderToFireStore() async {
     Timestamp now = Timestamp.now();
     DocumentReference staff = FirebaseFirestore.instance.collection('Staff').doc(widget.staff.id);
     Orders order = Orders("", staff,now,noteController.text,widget.total );
@@ -36,6 +35,7 @@ class _NoteTotalCheckOutState extends State<NoteTotalCheckOut> {
       }
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -75,42 +75,43 @@ class _NoteTotalCheckOutState extends State<NoteTotalCheckOut> {
                   ),
                 ),
                 Text(
-                    widget.total.toString(),
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 25,
-                      fontFamily: 'Secondary Family',
-                      fontWeight: FontWeight.w500,
-                    ),
+                  widget.total.toString(),
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 25,
+                    fontFamily: 'Secondary Family',
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ],
             ),
             const SizedBox(height: 20,),
             ElevatedButton(
-                onPressed: () async{
-                  if(widget.listOrderItem.isEmpty){
-                    Get.snackbar('Thông báo', 'Không có sản phẩm nào trong giỏ hàng');
-                    return;
-                  }
-                  addOrderToFireStore();
-
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF492803),
-                  fixedSize: const Size(300, 50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+              onPressed: () async {
+                if (widget.listOrderItem.isEmpty) {
+                  Get.snackbar('Thông báo', 'Không có sản phẩm nào trong giỏ hàng');
+                  return;
+                }
+                await addOrderToFireStore();
+                widget.listOrderItem.clear();
+                Get.back(result: true); // Pass result to previous page
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF492803),
+                fixedSize: const Size(300, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Text(
-                    'Thanh toán',
-                    style: TextStyle(
-                        color:Colors.white,
-                        fontSize: 30,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Secondary Family'
-                    )
-                )
+              ),
+              child: const Text(
+                'Thanh toán',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 30,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Secondary Family'
+                ),
+              ),
             )
           ],
         ),

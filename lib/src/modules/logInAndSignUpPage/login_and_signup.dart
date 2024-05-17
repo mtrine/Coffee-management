@@ -33,6 +33,7 @@ class LogInAndSignUpPage extends StatelessWidget {
             labelColor: Color(0xFF492803), // Màu chữ của tab đã chọn
             unselectedLabelColor: Color(0xFF57636c), // Màu chữ của tab chưa chọn
           ),
+          automaticallyImplyLeading: false,
         ),
         body: TabBarView(
           children: [

@@ -85,6 +85,7 @@ class OrderDetailFireStore {
       rethrow; // Ném ngoại lệ để báo lỗi nếu có
     }
   }
+
   Future<List<Product>> getProductById(List<OrderDetail> orderDetails) async {
     try {
       List<Product> products = [];
@@ -103,6 +104,47 @@ class OrderDetailFireStore {
     } catch (e) {
       print("Error: $e");
       rethrow; // Ném ngoại lệ để báo lỗi nếu có
+    }
+  }
+
+  Future<List<Product>> getProductBestSeller() async{
+    try {
+      // Step 1: Retrieve all order details
+      QuerySnapshot querySnapshot = await _firestore.collection(_collection).get();
+      List<DocumentSnapshot> orderDetailDocs = querySnapshot.docs;
+
+      // Step 2: Count the occurrences of each productId
+      Map<String, int> productIdCount = {};
+      for (var doc in orderDetailDocs) {
+        String productId = (doc['productId'] as DocumentReference).id;
+        if (productIdCount.containsKey(productId)) {
+          productIdCount[productId] = productIdCount[productId]! + 1;
+        } else {
+          productIdCount[productId] = 1;
+        }
+      }
+
+      // Step 3: Sort the productId by the number of occurrences in descending order
+      List<MapEntry<String, int>> sortedProductIds = productIdCount.entries.toList()
+        ..sort((a, b) => b.value.compareTo(a.value));
+
+      // Step 4: Retrieve the Product details for the top-selling products
+      List<Product> bestSellingProducts = [];
+      for (var entry in sortedProductIds) {
+        DocumentSnapshot productDoc = await FirebaseFirestore.instance.collection('Product').doc(entry.key).get();
+        bestSellingProducts.add(Product(
+          productDoc.id,
+          productDoc['name'],
+          productDoc['unitPrice'],
+          productDoc['image_url'],
+          productDoc['categoryId'],
+        ));
+      }
+
+      return bestSellingProducts;
+    } catch (e) {
+      print("Error: $e");
+      rethrow; // Throw the exception to handle it in the calling function
     }
   }
 }

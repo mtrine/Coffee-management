@@ -4,15 +4,19 @@ import 'package:qlqn/src/models/staff.dart';
 import 'package:qlqn/src/modules/cartPage/cart_page.dart';
 import 'package:qlqn/src/modules/editMenuPage/edit_menu_page.dart';
 import 'package:qlqn/src/modules/orderDetail/order_detail_page.dart';
+import '../../firebase/orderDetail_firestore.dart';
 import '../../models/category.dart';
 import '../../models/orderDetail.dart';
+import '../../models/product.dart';
+import '../orderDetail/components/card_product_bestseller.dart';
 import 'components/card_category.dart';
 import 'package:get/get.dart';
 
 class OptionOrderPage extends StatefulWidget {
-  OptionOrderPage({super.key, required this.staff,required this.listProtuctOrder});
-  Staff staff;
-  List<OrderDetail> listProtuctOrder ;
+  OptionOrderPage({super.key, required this.staff, required this.listProtuctOrder});
+  final Staff staff;
+  final List<OrderDetail> listProtuctOrder;
+
   @override
   _OptionOrderPageState createState() => _OptionOrderPageState();
 }
@@ -20,7 +24,18 @@ class OptionOrderPage extends StatefulWidget {
 class _OptionOrderPageState extends State<OptionOrderPage> {
   late final Stream<QuerySnapshot> _stream =
   FirebaseFirestore.instance.collection('Category').snapshots();
-
+  List<Product> listProduct = [];
+  @override
+  void initState() {
+    super.initState();
+    fecthData();
+  }
+  void fecthData() async {
+    List<Product> listProduct = await OrderDetailFireStore().getProductBestSeller();
+    setState(() {
+      this.listProduct = listProduct;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +58,7 @@ class _OptionOrderPageState extends State<OptionOrderPage> {
           IconButton(
             icon: const Icon(Icons.shopping_cart, color: Colors.white, size: 30),
             onPressed: () {
-              Get.to(CartPage(listOrderItem: widget.listProtuctOrder,staff: widget.staff));
+              Get.to(CartPage(listOrderItem: widget.listProtuctOrder, staff: widget.staff));
             },
           ),
         ],
@@ -55,7 +70,7 @@ class _OptionOrderPageState extends State<OptionOrderPage> {
           children: [
             SizedBox(
               height: 200, // Độ cao của ListView
-              child: StreamBuilder(
+              child: StreamBuilder<QuerySnapshot>(
                 stream: _stream,
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
@@ -65,16 +80,18 @@ class _OptionOrderPageState extends State<OptionOrderPage> {
                     scrollDirection: Axis.horizontal,
                     itemCount: snapshot.data!.docs.length,
                     itemBuilder: (context, index) {
+                      var doc = snapshot.data!.docs[index];
                       Categories categories = Categories(
-                        snapshot.data!.docs[index].id,
-                        snapshot.data!.docs[index]['name'],
-                        snapshot.data!.docs[index]['image_url'],
+                        doc.id,
+                        doc['name'],
+                        doc['image_url'],
                       );
                       return GestureDetector(
-                          onTap: (){
-                            Get.to(OrderDeatilPage(categories: categories,listProtuctOrder: widget.listProtuctOrder , ));
-                          },
-                          child: CardCategory(category: categories));
+                        onTap: () {
+                          Get.to(OrderDeatilPage(categories: categories, listProtuctOrder: widget.listProtuctOrder));
+                        },
+                        child: CardCategory(category: categories),
+                      );
                     },
                   );
                 },
@@ -82,7 +99,7 @@ class _OptionOrderPageState extends State<OptionOrderPage> {
             ),
             const SizedBox(height: 5), // Khoảng cách giữa ListView và nút
             ElevatedButton(
-              onPressed: (){
+              onPressed: () {
                 Get.to(const EditMenuPage());
               },
               style: ElevatedButton.styleFrom(
@@ -97,17 +114,25 @@ class _OptionOrderPageState extends State<OptionOrderPage> {
             const SizedBox(height: 20),
             Container(
               alignment: Alignment.center,
-              width:double.infinity,
+              width: double.infinity,
               height: 50,
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: const Color(0xFF492803), width: 2),
               ),
               child: const Text('Best Seller', style: TextStyle(color: Color(0xFF492803), fontSize: 20, fontWeight: FontWeight.w600, fontFamily: 'Second Family')),
-            )
+            ),
+            const SizedBox(height: 10),
+            Expanded(
+              child: ListView(
+                children: listProduct.map((product) => CardProductBestSeller(product: product)).toList(),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 }
+
+

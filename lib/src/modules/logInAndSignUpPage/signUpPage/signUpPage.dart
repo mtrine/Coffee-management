@@ -73,7 +73,6 @@ class _SignUpPageState extends State<SignUpPage> {
         )
     );
   }
-
   void _onSignUpClicked() async {
     var isValid = authBloc.isValidInfo(
       _fNameController.text,
@@ -83,13 +82,9 @@ class _SignUpPageState extends State<SignUpPage> {
       _addressController.text,
       _passwordController.text,
     );
-
     if (isValid) {
-
-
       // Hiển thị loading dialog
       LoadingDialog.showLoadingDialog(context, 'Loading...');
-
       // Gọi phương thức sign up từ authBloc
       authBloc.signUp(
         _fNameController.text,

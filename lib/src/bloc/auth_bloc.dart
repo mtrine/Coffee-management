@@ -1,9 +1,8 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:qlqn/src/firebase/staff_firestore.dart';
 
-class AuthBloc{
+class AuthBloc {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final _phoneController = StreamController<String>.broadcast();
   final _passwordController = StreamController<String>.broadcast();
@@ -11,6 +10,9 @@ class AuthBloc{
   final _mlNameController = StreamController<String>.broadcast();
   final _dobController = StreamController<String>.broadcast();
   final _addressController = StreamController<String>.broadcast();
+  final _newPasswordController = StreamController<String>.broadcast();
+  final _confirmPasswordController = StreamController<String>.broadcast();
+  final _oldPasswordController = StreamController<String>.broadcast();
 
   Stream<String> get phoneStream => _phoneController.stream;
   Stream<String> get passwordStream => _passwordController.stream;
@@ -18,122 +20,117 @@ class AuthBloc{
   Stream<String> get mlNameStream => _mlNameController.stream;
   Stream<String> get dobStream => _dobController.stream;
   Stream<String> get addressStream => _addressController.stream;
+  Stream<String> get newPasswordStream => _newPasswordController.stream;
+  Stream<String> get confirmPasswordStream => _confirmPasswordController.stream;
+  Stream<String> get oldPasswordStream => _oldPasswordController.stream;
 
   void dispose() {
-    _passwordController.close();
     _phoneController.close();
+    _passwordController.close();
     _fNameController.close();
     _mlNameController.close();
     _dobController.close();
     _addressController.close();
+    _newPasswordController.close();
+    _confirmPasswordController.close();
+    _oldPasswordController.close();
   }
-  bool isValidInfo(String fname ,String mlname,
-      String phone,String dob,String address, String password,) {
-    if(fname.isEmpty){
+
+  bool isValidInfo(String fname, String mlname, String phone, String dob, String address, String password) {
+    if (fname.isEmpty) {
       _fNameController.addError('Nhập họ');
       return false;
     }
     _fNameController.sink.add('');
-    if(mlname.isEmpty){
+
+    if (mlname.isEmpty) {
       _mlNameController.addError('Nhập họ');
       return false;
     }
     _mlNameController.sink.add('');
-    if(phone.isEmpty){
+
+    if (phone.isEmpty) {
       _phoneController.addError('Nhập SĐT');
       return false;
     }
     _phoneController.sink.add('');
 
-    if(dob.isEmpty){
+    if (dob.isEmpty) {
       _dobController.addError('Nhập địa chỉ');
       return false;
     }
     _dobController.sink.add('');
 
-    if(address.isEmpty){
+    if (address.isEmpty) {
       _addressController.addError('Nhập địa chỉ');
       return false;
     }
     _addressController.sink.add('');
 
-    if (password.length <6) {
+    if (password.length < 6) {
       _passwordController.addError('Mật khẩu phải trên 5 ký tự');
       return false;
     }
+
     return true;
   }
-  Future<void> signIn(String phone, String password,
-      Function onSuccess, Function(String) onError) async {
+
+  Future<void> signIn(String phone, String password, Function onSuccess, Function(String) onError) async {
     try {
-      // Kiểm tra đầu vào
       if (phone.isEmpty || password.isEmpty) {
         onError('Phone and password cannot be empty');
         return;
       }
 
-      final querySnapshot = await _firestore
-          .collection('Staff')
-          .where('phone', isEqualTo: phone)
-          .get();
+      final querySnapshot = await _firestore.collection('Staff').where('phone', isEqualTo: phone).get();
 
-      // Kiểm tra xem có người dùng nào có số điện thoại như vậy không
       if (querySnapshot.docs.isNotEmpty) {
         final user = querySnapshot.docs.first.data();
         if (user['password'] == password) {
-          // Đăng nhập thành công
           onSuccess();
         } else {
-          // Mật khẩu không chính xác
           onError('Password is incorrect');
         }
       } else {
-        // Người dùng không tồn tại
         onError('User not found');
       }
     } catch (e) {
-      // Xử lý lỗi
       onError('An error occurred. Please try again later.');
     }
   }
-  Future<void> signUp(String fname ,String lname,
-      String phone,String dob,String address, String password,
-      Function onSuccess, Function(String) onError) async {
+
+  Future<void> signUp(String fname, String lname, String phone, String dob, String address, String password, Function onSuccess, Function(String) onError) async {
     try {
-      // Kiểm tra đầu vào
       if (phone.isEmpty || password.isEmpty) {
         onError('Phone and password cannot be empty');
         return;
       }
 
-      final querySnapshot = await _firestore
-          .collection('Staff')
-          .where('phone', isEqualTo: phone)
-          .get();
+      final querySnapshot = await _firestore.collection('Staff').where('phone', isEqualTo: phone).get();
 
-      // Kiểm tra xem có người dùng nào có số điện thoại như vậy không
       if (querySnapshot.docs.isNotEmpty) {
         onError('User already exists');
       } else {
-        String? lastId= await StaffFireStore().getLastDocumentId();
+        String? lastId = await StaffFireStore().getLastDocumentId();
         String? firstChar;
         String? lastTwoChars;
-        String? Id;
-        if (lastId!.length == 3) {
-          firstChar = lastId.substring(0, 1); // Ký tự đầu tiên
-          lastTwoChars =lastId.substring(1); // Hai ký tự còn lại
+        String? id;
 
+        if (lastId!.length == 3) {
+          firstChar = lastId.substring(0, 1);
+          lastTwoChars = lastId.substring(1);
         } else {
           print("Chuỗi phải có đúng 3 ký tự.");
         }
+
         int lastTwoCharsInt = int.parse(lastTwoChars!);
-        if(lastTwoCharsInt+1<9){
-          Id="${firstChar!}0${lastTwoCharsInt+1}";
+        if (lastTwoCharsInt + 1 < 9) {
+          id = "${firstChar!}0${lastTwoCharsInt + 1}";
+        } else {
+          id = firstChar! + (lastTwoCharsInt + 1).toString();
         }
-        else{
-          Id=firstChar!+(lastTwoCharsInt+1).toString();
-        }
-        await _firestore.collection('Staff').doc(Id).set({
+
+        await _firestore.collection('Staff').doc(id).set({
           'fName': fname,
           'mlName': lname,
           'phone': phone,
@@ -142,13 +139,58 @@ class AuthBloc{
           'bDate': dob,
         });
 
-        // Đăng ký thành công
         onSuccess();
       }
     } catch (e) {
-      // Xử lý lỗi
       onError('An error occurred. Please try again later.');
     }
   }
 
+  Future<bool> isValidChangePassword(String staffId, String oldPassword, String newPassword, String confirmPassword) async {
+    final docSnapshot = await _firestore.collection('Staff').doc(staffId).get();
+    final user = docSnapshot.data();
+    if (user == null) {
+      return false;
+    }
+    if (user['password'] != oldPassword) {
+      _oldPasswordController.addError('Mật khẩu cũ không đúng');
+      return false;
+    }
+    _oldPasswordController.sink.add('');
+    if (oldPassword=='') {
+      _oldPasswordController.addError('Nhập mật khẩu cũ');
+      return false;
+    }
+    _oldPasswordController.sink.add('');
+
+    if (newPassword.isEmpty||newPassword.length < 6) {
+      _newPasswordController.addError('Mật khẩu phải hơn 6 ký tự');
+      return false;
+    }
+    _newPasswordController.sink.add('');
+
+    if (newPassword == user['password']) {
+      _newPasswordController.addError('Mật khẩu mới phải khác với mật khẩu cũ');
+      return false;
+    }
+    _newPasswordController.sink.add('');
+    if (confirmPassword.isEmpty || confirmPassword != newPassword) {
+      _confirmPasswordController.addError('Mật khẩu không khớp');
+      return false;
+    }
+    _confirmPasswordController.sink.add('');
+
+    return true;
+  }
+
+  Future<void> changePassword(String staffId, String newPassword, Function onSuccess, Function(String) onError) async {
+    try {
+      await _firestore.collection('Staff').doc(staffId).update({
+        'password': newPassword
+      });
+      onSuccess();
+    } catch (e) {
+      onError('An error occurred while updating the password. Please try again later.');
+    }
+  }
 }

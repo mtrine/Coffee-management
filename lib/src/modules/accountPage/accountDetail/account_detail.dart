@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qlqn/src/models/staff.dart';
-import 'package:qlqn/src/modules/accountPage/accountDetail/account_detail.dart';
-import 'package:qlqn/src/modules/accountPage/components/ButtonAccountPage.dart';
-import 'package:qlqn/src/modules/accountPage/informationDetail/information_detail.dart';
+import 'package:qlqn/src/modules/accountPage/changePasswordPage/change_password_page.dart';
+import 'package:qlqn/src/modules/logInAndSignUpPage/logInPage/login_page.dart';
 
-class AccountPage extends StatelessWidget {
-  const AccountPage({super.key,required this.staff});
-  final Staff staff;
+import '../components/ButtonAccountPage.dart';
+
+class AccountDetailPage extends StatelessWidget {
+   AccountDetailPage({super.key,required this.staff});
+  Staff staff;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF492803),
         title: const Text(
-          'Tài khoản nhân viên',
+          'Tài khoản',
           style: TextStyle(
             color: Colors.white,
             fontSize: 30.0,
@@ -27,13 +28,13 @@ class AccountPage extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.white, size: 30),
       ),
       body: SafeArea(
-        child:Column(
+        child: Column(
           children: [
-            ButtonAccountPage( text: "Thông tin cá nhân", onTap: ()=>Get.to(InformationDetailPage(staff: staff))),
-            ButtonAccountPage( text: "Tài khoản", onTap: ()=>Get.to(AccountDetailPage(staff: staff,)))
+             ButtonAccountPage( text: "Đổi mật khẩu", onTap: ()=>Get.to(ChangePasswordPage(staff: staff,))),
+             ButtonAccountPage( text: "Đăng xuất", onTap: ()=>Get.to(LogInPage())),
         ],
-        ) ,
-        ),
+        )
+      ),
     );
   }
 }

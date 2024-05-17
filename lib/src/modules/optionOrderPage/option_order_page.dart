@@ -8,7 +8,7 @@ import '../../firebase/orderDetail_firestore.dart';
 import '../../models/category.dart';
 import '../../models/orderDetail.dart';
 import '../../models/product.dart';
-import '../orderDetail/components/card_product_bestseller.dart';
+import 'components/card_product_bestseller.dart';
 import 'components/card_category.dart';
 import 'package:get/get.dart';
 

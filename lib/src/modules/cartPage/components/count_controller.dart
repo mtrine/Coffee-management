@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import '../../../models/orderDetail.dart';
 class CountController extends StatefulWidget {
   final OrderDetail productOrder;
-
-  const CountController({super.key, required this.productOrder});
+  Function handleDelete;
+  CountController({super.key, required this.productOrder,required this.handleDelete});
   @override
   _CountControllerState createState() => _CountControllerState();
 }
@@ -27,9 +27,12 @@ class _CountControllerState extends State<CountController> {
   }
 
   void _decrementCounter() {
-      if (widget.productOrder.quantity > 0) {
+      if (widget.productOrder.quantity >1 ) {
         widget.productOrder.quantity--;
         itemCount.value = widget.productOrder.quantity; // Cập nhật giá trị itemCount
+      }
+      else{
+        widget.handleDelete(widget.productOrder.productId);
       }
   }
 

@@ -95,7 +95,8 @@ class CardItemOder extends StatelessWidget {
                                   handleDelete(productOrder.productId);
                                 },
                             ),
-                            CountController(productOrder: productOrder,),
+                            CountController(productOrder: productOrder,handleDelete: handleDelete,),
+
                           ],
                         ),
 

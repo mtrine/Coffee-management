@@ -117,10 +117,11 @@ class OrderDetailFireStore {
       Map<String, int> productIdCount = {};
       for (var doc in orderDetailDocs) {
         String productId = (doc['productId'] as DocumentReference).id;
+        int quantity = doc['quantity'];
         if (productIdCount.containsKey(productId)) {
-          productIdCount[productId] = productIdCount[productId]! + 1;
+          productIdCount[productId] = productIdCount[productId]! + quantity;
         } else {
-          productIdCount[productId] = 1;
+          productIdCount[productId] = quantity;
         }
       }
 
@@ -130,8 +131,9 @@ class OrderDetailFireStore {
 
       // Step 4: Retrieve the Product details for the top-selling products
       List<Product> bestSellingProducts = [];
-      for (var entry in sortedProductIds) {
-        DocumentSnapshot productDoc = await FirebaseFirestore.instance.collection('Product').doc(entry.key).get();
+      int length=sortedProductIds.length>5?5:sortedProductIds.length;
+      for (int i = 0; i <length ; i++) {
+        DocumentSnapshot productDoc = await FirebaseFirestore.instance.collection('Product').doc(sortedProductIds[i].key).get();
         bestSellingProducts.add(Product(
           productDoc.id,
           productDoc['name'],
@@ -140,7 +142,6 @@ class OrderDetailFireStore {
           productDoc['categoryId'],
         ));
       }
-
       return bestSellingProducts;
     } catch (e) {
       print("Error: $e");

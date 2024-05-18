@@ -25,26 +25,33 @@ class _CardProductState extends State<CardProduct> {
       FirebaseFirestore.instance.collection('Product').doc(widget.product.id);
 
       // Check if the product is already in the list
-      bool productExists = widget.listProtuctOrder.any((orderDetail) {
-        return orderDetail.productId == documentReference;
-      });
+      bool productExists = false;
+      for (OrderDetail orderDetail in widget.listProtuctOrder) {
+        if (orderDetail.productId == documentReference) {
+          // If the product exists, increment the quantity
+          orderDetail.quantity += 1;
+          productExists = true;
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Đã thêm 1 ${widget.product.name} vào giỏ hàng'),
+                duration: const Duration(seconds: 1),
+            ),
+          );
+          break;
+        }
+      }
 
       // If the product is not in the list, add it
       if (!productExists) {
         OrderDetail orderDetail = OrderDetail(
-            "", null, documentReference, 1
+          "", null, documentReference, 1,
         );
         widget.listProtuctOrder.add(orderDetail);
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('${widget.product.name} đã thêm vào giỏ hàng'))
-        );
-      } else {
-        // If the product is already in the list, show a notification
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-                content: Text('${widget.product.name} đã có trong giỏ hàng'),
-                backgroundColor: Colors.red
-            )
+          SnackBar(
+              content: Text('${widget.product.name} đã thêm vào giỏ hàng'),
+              duration: const Duration(seconds: 1),
+          ),
         );
       }
     } catch (e) {

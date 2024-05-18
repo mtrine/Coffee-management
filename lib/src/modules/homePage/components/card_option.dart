@@ -26,7 +26,6 @@ class CardOption extends StatelessWidget {
           ), // Đặt padding cho nội dung bên trong Card
           child: Container(
             width: 150,
-            height: 150,
             decoration: BoxDecoration(
               color: const Color(0xffc49a6c),
               borderRadius: BorderRadius.circular(12), // Đặt bán kính cong cho góc của Container

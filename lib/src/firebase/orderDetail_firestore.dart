@@ -131,7 +131,7 @@ class OrderDetailFireStore {
 
       // Step 4: Retrieve the Product details for the top-selling products
       List<Product> bestSellingProducts = [];
-      int length=sortedProductIds.length>5?5:sortedProductIds.length;
+      int length=sortedProductIds.length>=5?5:sortedProductIds.length;
       for (int i = 0; i <length ; i++) {
         DocumentSnapshot productDoc = await FirebaseFirestore.instance.collection('Product').doc(sortedProductIds[i].key).get();
         bestSellingProducts.add(Product(

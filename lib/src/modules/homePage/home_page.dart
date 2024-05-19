@@ -38,6 +38,8 @@ class HomePage extends StatelessWidget {
                 child: GridView(
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
+                        crossAxisSpacing: 5, // Khoảng cách giữa các phần tử theo trục ngang
+                        mainAxisSpacing:5
                     ),
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),

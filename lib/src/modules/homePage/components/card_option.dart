@@ -25,7 +25,7 @@ class CardOption extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ), // Đặt padding cho nội dung bên trong Card
           child: Container(
-            constraints: const BoxConstraints(minWidth: 150, minHeight: 150,maxHeight: 150,maxWidth: 150),
+            width: 200,
             decoration: BoxDecoration(
               color: const Color(0xffc49a6c),
               borderRadius: BorderRadius.circular(12), // Đặt bán kính cong cho góc của Container
@@ -33,11 +33,13 @@ class CardOption extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(icon, size: 70, color: Colors.white),
+                Icon(icon, size: 50, color: Colors.white),
                 Text(
                   content,
                   style: const TextStyle(color: Colors.white, fontSize: 20,fontWeight: FontWeight.w500,fontFamily: "Second Family"),
                   textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis, // Xử lý khi văn bản quá dài
+                  maxLines: 2,
                 ),
               ],
             ),

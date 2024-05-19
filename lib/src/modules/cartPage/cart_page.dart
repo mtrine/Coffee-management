@@ -74,6 +74,7 @@ class _CartPageState extends State<CartPage> {
                     ? const Center(
                   child: Text(
                     'Giỏ hàng của bạn đang trống',
+                    textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                   ),
                 )

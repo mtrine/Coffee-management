@@ -80,7 +80,7 @@ class _OrderHistoryDetailPageState extends State<OrderHistoryDetailPage> {
           'Chi tiết hóa đơn',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 30.0,
+            fontSize: 25.0,
             fontWeight: FontWeight.w500,
             fontStyle: FontStyle.italic,
             fontFamily: 'Lora',

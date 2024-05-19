@@ -16,7 +16,7 @@ class EditMenuPage extends StatelessWidget {
           'Chỉnh sửa menu',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 35.0,
+            fontSize: 25.0,
             fontWeight: FontWeight.w500,
             fontStyle: FontStyle.italic,
             fontFamily: 'Lora',

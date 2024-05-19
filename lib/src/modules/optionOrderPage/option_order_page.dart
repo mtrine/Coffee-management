@@ -88,8 +88,8 @@ class _OptionOrderPageState extends State<OptionOrderPage> {
           'Orders',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 35.0,
-            fontWeight: FontWeight.w600,
+            fontSize: 25.0,
+            fontWeight: FontWeight.w400,
             fontStyle: FontStyle.italic,
             fontFamily: 'Lora',
           ),

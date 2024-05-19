@@ -65,7 +65,7 @@ class _OrderCardState extends State<OrderCard> {
                     const Text(
                       'Thời gian',
                       style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Secondary Family',
                       ),
@@ -81,7 +81,7 @@ class _OrderCardState extends State<OrderCard> {
                     const Text(
                       'Nhân viên order',
                       style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Secondary Family',
                       ),
@@ -117,7 +117,7 @@ class _OrderCardState extends State<OrderCard> {
                     const Text(
                       'Tổng tiền',
                       style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Secondary Family',
                       ),
@@ -126,7 +126,7 @@ class _OrderCardState extends State<OrderCard> {
                     Text(
                       widget.orders.total.toString(),
                       style: const TextStyle(
-                        fontSize: 25,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Secondary Family',
                       ),
@@ -136,7 +136,7 @@ class _OrderCardState extends State<OrderCard> {
                         Get.to(OrderHistoryDetailPage(orders: widget.orders, staffName: staffName, staffId: staffId));
                       },
                       style: ElevatedButton.styleFrom(
-                        fixedSize: const Size.fromHeight(50),
+                        minimumSize: const Size(150, 50),
                         backgroundColor: const Color(0xFF492803),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -152,7 +152,7 @@ class _OrderCardState extends State<OrderCard> {
                             'Xem chi tiết',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 16,
+                              fontSize: 15,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Secondary Family',
                             ),

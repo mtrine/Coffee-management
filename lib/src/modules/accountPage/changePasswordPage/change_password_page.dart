@@ -63,7 +63,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 ),
                 const SizedBox(height: 20,),
                 TextFieldChangePass(
-                  content: "Nhập lại mật khẩu mới", 
+                  content: "Nhập lại \nmật khẩu mới",
                   hintText: "Nhập mật lại mật khẩu mới",
                   controller: _passConfirmController,
                   streamController: authBloc.confirmPasswordStream,

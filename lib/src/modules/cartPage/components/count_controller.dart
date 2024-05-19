@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -47,16 +48,16 @@ class _CountControllerState extends State<CountController> {
       ),
       child: Row(
         children: [
-          ElevatedButton(
+          TextButton(
             onPressed: _decrementCounter,
-            style: ElevatedButton.styleFrom(
+            style: TextButton.styleFrom(
               fixedSize: const Size(10, 10),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
               padding: EdgeInsets.zero, // Remove padding
             ),
-            child: Text('-',style: TextStyle(fontSize: 20)),
+            child: const Text('-',style: TextStyle(fontSize: 20)),
           ),
           Obx(() => Expanded(
             child: Text(
@@ -64,15 +65,15 @@ class _CountControllerState extends State<CountController> {
               style: const TextStyle(fontSize: 15),
             ),
           )),
-          ElevatedButton(
+          TextButton(
             onPressed: _incrementCounter,
-            style: ElevatedButton.styleFrom(
+            style: TextButton.styleFrom(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
               padding: EdgeInsets.zero, // Remove padding
             ),
-            child: Text('+', style: TextStyle(fontSize: 20)),
+            child: const Text('+', style: TextStyle(fontSize: 20)),
           ),
         ],
       ),

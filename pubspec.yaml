@@ -1,5 +1,5 @@
 name: qlqn
-description: "A new Flutter project."
+description: "Project môn phân tích thiết hệ thống"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -40,6 +40,7 @@ dependencies:
   firebase_storage: ^11.7.5
   dotted_line: ^3.2.2
   intl: ^0.19.0
+  shared_preferences: ^2.2.3
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6

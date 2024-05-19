@@ -29,8 +29,8 @@ class CardProductBestSeller extends StatelessWidget {
                   borderRadius: BorderRadius.circular(0),
                   child: Image.network(
                     product.imageUrl,
-                    width: 120,
-                    height: 120,
+                    width: 100,
+                    height: 100,
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -42,14 +42,14 @@ class CardProductBestSeller extends StatelessWidget {
                     Text(
                       product.name,
                       style: const TextStyle(
-                        fontSize: 25,
+                        fontSize: 20,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     Text(
                       '${product.unitPrice} VND',
                       style: const TextStyle(
-                        fontSize: 25,
+                        fontSize: 20,
                         fontWeight: FontWeight.w400,
                       ),
                     ),

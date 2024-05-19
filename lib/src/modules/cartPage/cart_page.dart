@@ -57,7 +57,7 @@ class _CartPageState extends State<CartPage> {
           'Xác nhận đơn hàng',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 35.0,
+            fontSize: 25.0,
             fontWeight: FontWeight.w500,
             fontStyle: FontStyle.italic,
             fontFamily: 'Lora',
@@ -126,13 +126,14 @@ class _CartPageState extends State<CartPage> {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF492803),
-                      fixedSize: const Size(300, 50),
+                      minimumSize: const Size(300, 50),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                     child: const Text(
                         'Xác nhận',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             color:Colors.white,
                             fontSize: 30,

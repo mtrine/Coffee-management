@@ -140,6 +140,8 @@ class _LogInPageState extends State<LogInPage> {
             Row(
               children: [
                 Checkbox(
+                  fillColor: MaterialStateProperty.all(const Color(0xFF492803)),
+                  checkColor: Colors.white,
                   value: _isRememberMe,
                   onChanged: (bool? value) {
                     setState(() {

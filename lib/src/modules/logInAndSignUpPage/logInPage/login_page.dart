@@ -59,10 +59,11 @@ class _LogInPageState extends State<LogInPage> {
     if (staff != null) {
       authBloc.signIn(phone, password, () {
         LoadingDialog.hideLoadingDialog(context);
+        _saveRememberMeStatus(_isRememberMe);
         Get.to(() => HomePage(staff: staff,listProtuctOrder:widget.listProtuctOrder ,));
       }, (msg) {
         LoadingDialog.hideLoadingDialog(context);
-        MsgDialog.showMsgDialog(context, 'Sign-In', msg);
+        MsgDialog.showMsgDialog(context, 'Đăng nhập', msg);
       });
     } else {
       LoadingDialog.hideLoadingDialog(context);
@@ -73,105 +74,108 @@ class _LogInPageState extends State<LogInPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: _phoneController,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                hintText: 'Nhập số điện thoại',
-                prefixIcon: const Icon(
-                  Icons.account_box,
-                  color: Color(0xFF492803),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(color: Color(0xFF492803), width: 2.0),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(color: Color(0xFF492803), width: 2.0),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(color: Colors.red, width: 2.0),
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              controller: _passwordController,
-              obscureText: _isPasswordObscured,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                hintText: 'Nhập mật khẩu',
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      _isPasswordObscured = !_isPasswordObscured;
-                    });
-                  },
-                  icon: Icon(
-                    _isPasswordObscured ? Icons.visibility_off : Icons.visibility,
-                    color: const Color(0xFF492803),
-                  ),
-                ),
-                prefixIcon: const Icon(Icons.key, color: Color(0xFF492803)),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(color: Color(0xFF492803), width: 2.0),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(color: Color(0xFF492803), width: 2.0),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(color: Colors.red, width: 2.0),
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                Checkbox(
-                  fillColor: MaterialStateProperty.all(const Color(0xFF492803)),
-                  checkColor: Colors.white,
-                  value: _isRememberMe,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      _isRememberMe = value ?? false;
-                      _saveRememberMeStatus(_isRememberMe);
-                    });
-                  },
-                ),
-                const Text(
-                  "Remember me",
-                  style: TextStyle(
-                    fontSize:16,
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Image(
+                  image: AssetImage('assets/img/Logo.jpg'), height: 300, width: 300),
+              TextField(
+                controller: _phoneController,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  hintText: 'Nhập số điện thoại',
+                  prefixIcon: const Icon(
+                    Icons.account_box,
                     color: Color(0xFF492803),
                   ),
-                )
-              ],
-            ),
-            const SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: onSignInClick,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF492803),
-                fixedSize: const Size(250, 50),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(color: Color(0xFF492803), width: 2.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(color: Color(0xFF492803), width: 2.0),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(color: Colors.red, width: 2.0),
+                  ),
+                ),
               ),
-              child: const Text(
-                'Đăng nhập',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 20),
+              const SizedBox(height: 20),
+              TextField(
+                controller: _passwordController,
+                obscureText: _isPasswordObscured,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  hintText: 'Nhập mật khẩu',
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _isPasswordObscured = !_isPasswordObscured;
+                      });
+                    },
+                    icon: Icon(
+                      _isPasswordObscured ? Icons.visibility_off : Icons.visibility,
+                      color: const Color(0xFF492803),
+                    ),
+                  ),
+                  prefixIcon: const Icon(Icons.key, color: Color(0xFF492803)),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(color: Color(0xFF492803), width: 2.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(color: Color(0xFF492803), width: 2.0),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(color: Colors.red, width: 2.0),
+                  ),
+                ),
               ),
-            )
-          ],
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  Checkbox(
+                    fillColor: MaterialStateProperty.all(const Color(0xFF492803)),
+                    checkColor: Colors.white,
+                    value: _isRememberMe,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        _isRememberMe = value ?? false;
+                      });
+                    },
+                  ),
+                  const Text(
+                    "Remember me",
+                    style: TextStyle(
+                      fontSize:16,
+                      color: Color(0xFF492803),
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: onSignInClick,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF492803),
+                  fixedSize: const Size(250, 50),
+                ),
+                child: const Text(
+                  'Đăng nhập',
+                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 20),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

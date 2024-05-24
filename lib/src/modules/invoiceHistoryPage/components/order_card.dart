@@ -87,7 +87,7 @@ class _OrderCardState extends State<OrderCard> {
                       ),
                     ),
                     Text(
-                      ' $staffName-$staffId',
+                      staffName!=""?'$staffName-$staffId':"Nhân viên đã bị xóa",
                       style: const TextStyle(
                         fontSize: 18,
                         color: Colors.black,

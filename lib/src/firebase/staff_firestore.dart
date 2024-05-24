@@ -21,7 +21,7 @@ class StaffFireStore {
     try {
       DocumentSnapshot<Map<String, dynamic>> doc = await firestore.collection(
           _collection).doc(id).get();
-      return Staff(id,doc['fName'],doc['mlName'],doc['password'],doc['phone'],doc['address'],doc['bDate']);
+      return Staff(id,doc['fName'],doc['mlName'],doc['password'],doc['phone'],doc['address'],doc['bDate'],doc['manager']);
     } catch (e) {
       print("Error: $e");
       rethrow; // Ném ngoại lệ để báo lỗi nếu có
@@ -88,5 +88,24 @@ class StaffFireStore {
       print('Error fetching last document: $e');
     }
     return null;
+  }
+
+  Future<List<Staff>> getAll() async {
+    List<Staff> listStaff = [];
+    try {
+      QuerySnapshot querySnapshot = await firestore.collection(_collection).get();
+      List<DocumentSnapshot> documents = querySnapshot.docs;
+      for (var doc in documents) {
+        // Xây dựng một đối tượng Product từ dữ liệu của mỗi tài liệu
+        Staff staff = Staff(doc.id, doc['fName'], doc['mlName'], doc['password'], doc['phone'], doc['address'], doc['bDate'], doc['manager']);
+        if(staff.manager==false){
+          listStaff.add(staff);
+        }
+      }
+    } catch (e) {
+      print("Error: $e");
+      rethrow; // Ném ngoại lệ để báo lỗi nếu có
+    }
+    return listStaff;
   }
 }

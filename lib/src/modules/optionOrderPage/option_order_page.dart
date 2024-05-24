@@ -146,7 +146,27 @@ class _OptionOrderPageState extends State<OptionOrderPage> {
             const SizedBox(height: 5), // Khoảng cách giữa ListView và nút
             ElevatedButton(
               onPressed: () {
-                Get.to(const EditMenuPage());
+                if(widget.staff.manager ){
+                  Get.to(EditMenuPage());
+                }else{
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text("Không thuộc chức vụ"),
+                        content: const Text("Bạn không được quyền truy cập vào."),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text("Đóng"),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF492803),

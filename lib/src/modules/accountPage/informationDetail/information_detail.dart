@@ -16,7 +16,7 @@ class InformationDetailPage extends StatefulWidget {
 
 class _InformationDetailPageState extends State<InformationDetailPage> {
   late Staff staffInfor;
-
+  late String role;
   @override
   void initState() {
     super.initState();
@@ -27,6 +27,7 @@ class _InformationDetailPageState extends State<InformationDetailPage> {
   void getStaffInformation() async {
     StaffFireStore staffFireStore = StaffFireStore();
     Staff staff = await staffFireStore.getById(widget.staff.id);
+    role= staff.manager? 'Quản lý' : 'Nhân viên';
     setState(() {
       staffInfor = staff;
     });
@@ -83,6 +84,10 @@ class _InformationDetailPageState extends State<InformationDetailPage> {
               RowInformation(
                 title: "Địa chỉ:",
                 content: staffInfor.address,
+              ),
+              RowInformation(
+                title: "Chức vụ:",
+                content: role,
               ),
             ],
           ),

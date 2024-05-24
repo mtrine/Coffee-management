@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-class TextFieldToSignUp extends StatelessWidget {
-  TextFieldToSignUp({
+class TextFieldToAddStaff extends StatelessWidget {
+  TextFieldToAddStaff({
     super.key,
     required this.content,
     required this.hintText,

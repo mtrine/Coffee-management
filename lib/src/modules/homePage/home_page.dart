@@ -3,20 +3,51 @@ import 'package:get/get.dart';
 import 'package:qlqn/src/models/staff.dart';
 import 'package:qlqn/src/modules/accountPage/account_page.dart';
 import 'package:qlqn/src/modules/invoiceHistoryPage/invoice_history_page.dart';
+import 'package:qlqn/src/modules/manageStaffPage/manageStaffPage.dart';
 import '../../models/orderDetail.dart';
 import '../optionOrderPage/option_order_page.dart';
 import 'components/card_option.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   HomePage({super.key,required this.staff, required this.listProtuctOrder});
   Staff staff;
   List<OrderDetail> listProtuctOrder ;
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  void onTapManage(){
+    if(widget.staff.manager){
+      Get.to(() => ManageStaffPage());
+    }else{
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Lỗi"),
+            content: const Text("Bạn không có quyền truy cập."),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("Đóng"),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope( // Sử dụng WillPopScope để kiểm soát việc quay lại từ nút "Back" trên điện thoại
       onWillPop: () async {
         // Thực hiện chuyển hướng tới trang khác thay vì quay lại trang trước đó
-        Get.offAll(() => HomePage(staff: staff, listProtuctOrder: listProtuctOrder));
+        Get.offAll(() => HomePage(staff: widget.staff, listProtuctOrder: widget.listProtuctOrder));
         return false; // Trả về false để ngăn việc quay lại trang trước đó
       },
       child: Scaffold(
@@ -44,9 +75,10 @@ class HomePage extends StatelessWidget {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     children:[
-                      CardOption(icon: Icons.edit_note,onTap: ()=>Get.to(OptionOrderPage(staff: staff,listProtuctOrder: listProtuctOrder,)),content: "ORDERS",),
+                      CardOption(icon: Icons.edit_note,onTap: ()=>Get.to(OptionOrderPage(staff: widget.staff,listProtuctOrder: widget.listProtuctOrder,)),content: "ORDERS",),
                       CardOption(icon: Icons.ballot,onTap: ()=> Get.to(const InvoiceHistoryPage()),content: "INVOICE",),
-                      CardOption(icon: Icons.assignment_ind,onTap: ()=> Get.to(AccountPage(staff: staff,)),content: "TÀI KHOẢN",),
+                      CardOption(icon: Icons.assignment_ind,onTap: ()=> Get.to(AccountPage(staff: widget.staff,)),content: "ACCOUNT",),
+                      CardOption(icon: Icons.manage_accounts,onTap:onTapManage,content: "MANAGE",),
                     ]
                 )
             )

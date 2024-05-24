@@ -137,6 +137,7 @@ class AuthBloc {
           'password': password,
           'address': address,
           'bDate': dob,
+          'manager': false,
         });
 
         onSuccess();

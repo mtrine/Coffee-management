@@ -16,21 +16,29 @@ class RowInformation extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            title,
-            style: const TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.w500,
-              fontFamily: 'Roboto',
+              title,
+              style: const TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.w500,
+                fontFamily: 'Roboto',
+              ),
+              overflow: TextOverflow.ellipsis,
             ),
-          ),
-          Text(
-            content,
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w400,
-              fontFamily: 'Roboto',
+          const SizedBox(width: 10), // Add some spacing between title and content
+          Expanded(
+            flex: 3,
+            child: Text(
+              content,
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w400,
+                fontFamily: 'Roboto',
+              ),
+              overflow: TextOverflow.visible,
+              softWrap: true,
             ),
           ),
         ],

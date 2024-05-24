@@ -50,6 +50,7 @@ class _EditInformationPageState extends State<EditInformationPage> {
       _phoneController.text,
       _addressController.text,
       _dobController.text,
+      widget.staff.manager,
     );
     staffFireStore.updateInformation(staff);
     Get.back(result: true);

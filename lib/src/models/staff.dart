@@ -8,10 +8,10 @@ class Staff{
   late final String _phone;
   late final String _address;
   late final String _dob;
-
+  late final bool _manager;
 
   Staff(this._id, this._fname, this._mlname, this._password, this._phone,
-      this._address, this._dob);
+      this._address, this._dob,this._manager);
 
 
   String get id => _id;
@@ -41,6 +41,7 @@ class Staff{
       data['phone'],
       data['address'],
       data['dob'],
+      data['manager']
     );
   }
 
@@ -57,6 +58,7 @@ class Staff{
           querySnapshot.docs.first['phone'],
           querySnapshot.docs.first['address'],
           querySnapshot.docs.first['bDate'],
+          querySnapshot.docs.first['manager'],
         );
       } else {
         return null;
@@ -101,5 +103,11 @@ class Staff{
 
   set dob(String value) {
     _dob = value;
+  }
+
+  bool get manager => _manager;
+
+  set manager(bool value) {
+    _manager = value;
   }
 }

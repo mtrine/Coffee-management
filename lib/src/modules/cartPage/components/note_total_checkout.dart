@@ -25,6 +25,7 @@ class NoteTotalCheckOut extends StatefulWidget {
 
 class _NoteTotalCheckOutState extends State<NoteTotalCheckOut> {
   TextEditingController noteController = TextEditingController();
+
   Future<void> addOrderToFireStore()async {
     Timestamp now = Timestamp.now();
     DocumentReference staff = FirebaseFirestore.instance.collection('Staff').doc(widget.staff.id);
@@ -40,6 +41,25 @@ class _NoteTotalCheckOutState extends State<NoteTotalCheckOut> {
     });
   }
 
+  void ShowNotice() async{
+     showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Orders'),
+          content: const Text('Bạn đã order thành công!'),
+          actions: [
+            TextButton(
+              child: const Text('Đóng'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

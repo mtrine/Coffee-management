@@ -81,7 +81,7 @@ class _SignUpPageState extends State<AddStaffPage> {
                           fixedSize: const Size(250, 50)
                       ),
                       child: const Text(
-                        'Đăng ký',
+                        'Thêm nhân viên',
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w500,
@@ -125,8 +125,8 @@ class _SignUpPageState extends State<AddStaffPage> {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: const Text("Đăng ký thành công"),
-                content: const Text("Chúc mừng! Bạn đã đăng ký thành công."),
+                title: const Text("Thêm nhân viên"),
+                content: const Text("Bạn đã thêm nhân viên thành công!"),
                 actions: [
                   TextButton(
                     onPressed: () {

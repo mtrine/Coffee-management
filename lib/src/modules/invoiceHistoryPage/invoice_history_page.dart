@@ -44,7 +44,9 @@ class _InvoiceHistoryPageState extends State<InvoiceHistoryPage> {
       ),
       body: SafeArea(
         child:ListView(
-          children: orederList.map((e) => OrderCard(orders: e)).toList(),
+          children:
+          orederList.isNotEmpty? orederList.map((e) => OrderCard(orders: e)).toList()
+              :[const Center(child: Text('Không có hóa đơn nào'))],
         )
       ),
     );

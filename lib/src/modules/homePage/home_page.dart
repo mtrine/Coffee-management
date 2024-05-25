@@ -51,15 +51,22 @@ class _HomePageState extends State<HomePage> {
         return false; // Trả về false để ngăn việc quay lại trang trước đó
       },
       child: Scaffold(
-        appBar: AppBar(
+        appBar:AppBar(
           backgroundColor: const Color(0xFF492803),
-          title: const Text('Welcome.',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 25.0,
-              fontWeight: FontWeight.w400,
-              fontStyle: FontStyle.italic,
-              fontFamily: 'Lora',),
+          title: Container(
+            margin: const EdgeInsets.only(bottom: 8.0),
+            child: Text(
+              'Welcome, ${widget.staff.fname} ${widget.staff.mlname}!',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 25.0,
+                fontWeight: FontWeight.w400,
+                fontStyle: FontStyle.italic,
+                fontFamily: 'Lora',
+              ),
+              softWrap: true, // Cho phép xuống hàng
+              overflow: TextOverflow.visible, // Cho phép phần văn bản hiển thị đầy đủ và xuống hàng nếu cần
+            ),
           ),
           automaticallyImplyLeading: false,
         ),

@@ -94,14 +94,7 @@ class _OrderHistoryDetailPageState extends State<OrderHistoryDetailPage> {
           padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
           child: Column(
             children: [
-              SingleChildScrollView(
-                physics: const NeverScrollableScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minWidth: MediaQuery.of(context).size.width,
-                  ),
-                  child: DataTable(
+                DataTable(
                     columnSpacing: 20,
                     headingRowColor: MaterialStateProperty.resolveWith<Color?>(
                           (Set<MaterialState> states) {
@@ -110,40 +103,44 @@ class _OrderHistoryDetailPageState extends State<OrderHistoryDetailPage> {
                     ),
                     columns: const [
                       DataColumn(
-                        label: Text(
-                          'Số lượng',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white, // Màu chữ trắng để nổi bật trên nền đen
+                        label: Expanded(
+                          child: Text(
+                            'Số lượng',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white, // Màu chữ trắng để nổi bật trên nền đen
+                            ),
                           ),
                         ),
                       ),
                       DataColumn(
-                        label: Text(
-                          'Tên món',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                        label: Expanded(
+                          child: Text(
+                            'Tên món',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
                       DataColumn(
-                        label: Text(
-                          'Thành tiền',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                        label: Expanded(
+                          child: Text(
+                            'Thành tiền',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
                     ],
                     rows: getDataRows(),
                   ),
-                ),
-              ),
               TextRow(title:"Thời gian order", content: formatTimestamp(widget.orders.orderDate)),
               TextRow(title:"Nhân viên", content:"${widget.staffName}-${widget.staffId}"),
               TextRow(title:"Tổng tiền", content: widget.orders.total.toString()),

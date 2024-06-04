@@ -39,11 +39,27 @@ class _AddProductPageState extends State<AddProductPage> {
       categories = fetchedCategories;
     });
   }
-
+  isValid(int UnitPrice, String categoryName){
+    if(UnitPrice <= 0){
+      return false;
+    }
+    if(categoryName == 'Chọn mục'){
+      return false;
+    }
+    return true;
+  }
   Future<void> addProduct() async {
     try {
       String url = await StorageService().uploadFile(File(image!.path), 'upload');
       int unitPrice = int.parse(priceController.text);
+      if(!isValid(unitPrice, dropDownValue.value)){
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text('Thêm sản phẩm thất bại'),
+          duration: Duration(seconds: 2), // Thời gian hiển thị Snackbar
+        ));
+        return;
+      }
       DocumentReference categoryRef = FirebaseFirestore.instance.collection('Category').doc(categoryId);
       Product product = Product("", nameController.text, unitPrice, url, categoryRef);
       await ProductFireStore().insert(product);

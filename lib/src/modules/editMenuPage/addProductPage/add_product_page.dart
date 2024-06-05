@@ -39,27 +39,46 @@ class _AddProductPageState extends State<AddProductPage> {
       categories = fetchedCategories;
     });
   }
-  isValid(int UnitPrice, String categoryName){
-    if(UnitPrice <= 0){
-      return false;
+
+  String? isValid(String name,int unitPrice, String categoryName) {
+    if(name==""){
+      return 'Vui lòng nhập tên món';
     }
-    if(categoryName == 'Chọn mục'){
-      return false;
+    if (unitPrice <= 0) {
+      return 'Vui lòng nhập giá đúng';
     }
-    return true;
+    if (categoryName == 'Chọn mục') {
+      return 'Vui lòng chọn mục';
+    }
+    return null;
   }
+
   Future<void> addProduct() async {
+    // Perform validation before any asynchronous operations
+    int unitPrice;
+    try {
+      unitPrice = int.parse(priceController.text);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        backgroundColor: Colors.red,
+        content: Text('Vui lòng nhập giá đúng'),
+        duration: Duration(seconds: 2),
+      ));
+      return;
+    }
+
+    String? validationResult = isValid(nameController.text,unitPrice, dropDownValue.value);
+    if (validationResult != null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.red,
+        content: Text(validationResult),
+        duration: Duration(seconds: 2),
+      ));
+      return;
+    }
+
     try {
       String url = await StorageService().uploadFile(File(image!.path), 'upload');
-      int unitPrice = int.parse(priceController.text);
-      if(!isValid(unitPrice, dropDownValue.value)){
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          backgroundColor: Colors.red,
-          content: Text('Thêm sản phẩm thất bại'),
-          duration: Duration(seconds: 2), // Thời gian hiển thị Snackbar
-        ));
-        return;
-      }
       DocumentReference categoryRef = FirebaseFirestore.instance.collection('Category').doc(categoryId);
       Product product = Product("", nameController.text, unitPrice, url, categoryRef);
       await ProductFireStore().insert(product);
@@ -86,6 +105,7 @@ class _AddProductPageState extends State<AddProductPage> {
       ));
     }
   }
+
 
   void FdropDownValue(String? value) {
     if (value != null) {

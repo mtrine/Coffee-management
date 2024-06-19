@@ -110,12 +110,12 @@ class _SignUpPageState extends State<AddStaffPage> {
       LoadingDialog.showLoadingDialog(context, 'Loading...');
       // Gọi phương thức sign up từ authBloc
       authBloc.signUp(
-        _fNameController.text,
-        _mlNameController.text,
-        _phoneController.text,
-        _dobController.text,
-        _addressController.text,
-        _passwordController.text,
+        _fNameController.text.trim(),
+        _mlNameController.text.trim(),
+        _phoneController.text.trim(),
+        _dobController.text.trim(),
+        _addressController.text.trim(),
+        _passwordController.text.trim(),
             () {
           // Xử lý khi đăng ký thành công
           LoadingDialog.hideLoadingDialog(context);

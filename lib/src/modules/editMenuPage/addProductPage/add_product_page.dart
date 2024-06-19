@@ -40,7 +40,7 @@ class _AddProductPageState extends State<AddProductPage> {
     });
   }
 
-  String? isValid(String name,int unitPrice, String categoryName) {
+  String? isValid(String name,int unitPrice, String categoryName,XFile? image) {
     if(name==""){
       return 'Vui lòng nhập tên món';
     }
@@ -50,6 +50,9 @@ class _AddProductPageState extends State<AddProductPage> {
     if (categoryName == 'Chọn mục') {
       return 'Vui lòng chọn mục';
     }
+    if(image==null){
+      return 'Vui lòng chọn ảnh';
+    }
     return null;
   }
 
@@ -57,7 +60,7 @@ class _AddProductPageState extends State<AddProductPage> {
     // Perform validation before any asynchronous operations
     int unitPrice;
     try {
-      unitPrice = int.parse(priceController.text);
+      unitPrice = int.parse(priceController.text.trim());
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         backgroundColor: Colors.red,
@@ -67,12 +70,12 @@ class _AddProductPageState extends State<AddProductPage> {
       return;
     }
 
-    String? validationResult = isValid(nameController.text,unitPrice, dropDownValue.value);
+    String? validationResult = isValid(nameController.text.trim(),unitPrice, dropDownValue.value,image);
     if (validationResult != null) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: Colors.red,
         content: Text(validationResult),
-        duration: Duration(seconds: 2),
+        duration: const Duration(seconds: 2),
       ));
       return;
     }
@@ -84,11 +87,20 @@ class _AddProductPageState extends State<AddProductPage> {
       await ProductFireStore().insert(product);
 
       // Hiển thị Snackbar thông báo thành công
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Thêm sản phẩm thành công'),
-        duration: Duration(seconds: 2), // Thời gian hiển thị Snackbar
-      ));
-
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Thêm sản phẩm thành công'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('OK'),
+              ),
+            ],
+      )
+      );
       // Đặt lại trạng thái ban đầu
       setState(() {
         image = null;

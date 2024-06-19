@@ -51,8 +51,8 @@ class _LogInPageState extends State<LogInPage> {
   }
 
   void onSignInClick() async {
-    final String phone = _phoneController.text;
-    final String password = _passwordController.text;
+    final String phone = _phoneController.text.trim();
+    final String password = _passwordController.text.trim();
     final Staff? staff = await Staff.getByPhone(phone); // Sử dụng phương thức getByPhone
     var authBloc = MyApp.of(context).authBloc;
     LoadingDialog.showLoadingDialog(context, 'Loading...');

@@ -29,7 +29,7 @@ class _NoteTotalCheckOutState extends State<NoteTotalCheckOut> {
   Future<void> addOrderToFireStore()async {
     Timestamp now = Timestamp.now();
     DocumentReference staff = FirebaseFirestore.instance.collection('Staff').doc(widget.staff.id);
-    Orders order = Orders("", staff,now,noteController.text,widget.total );
+    Orders order = Orders("", staff,now,noteController.text );
     await OrderFireStore().insert(order).then((DocumentReference docRef) {
       for(var productOrder in widget.listOrderItem){
         DocumentReference? product = productOrder.productId;

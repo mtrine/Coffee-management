@@ -5,16 +5,14 @@ class Orders{
   late final DocumentReference _staffId;
   late final Timestamp _orderDate;
   late final String _decription;
-  late final int _total;
+
 
   Orders(
-      this._id, this._staffId, this._orderDate, this._decription, this._total);
+      this._id, this._staffId, this._orderDate, this._decription);
 
-  int get total => _total;
 
-  set total(int value) {
-    _total = value;
-  }
+
+
 
   String get decription => _decription;
 

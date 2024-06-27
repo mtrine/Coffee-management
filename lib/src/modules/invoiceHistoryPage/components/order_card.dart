@@ -3,8 +3,11 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
+import '../../../firebase/orderDetail_firestore.dart';
 import '../../../firebase/order_firestore.dart';
 import '../../../models/order.dart';
+import '../../../models/orderDetail.dart';
+import '../../../models/product.dart';
 import '../../orderHistoryDetailPage/order_history_detail_page.dart';
 class OrderCard extends StatefulWidget {
   OrderCard({
@@ -20,18 +23,28 @@ class OrderCard extends StatefulWidget {
 class _OrderCardState extends State<OrderCard> {
   String staffName = '';
   String staffId = '';
-
+  double total = 0;
   @override
   void initState() {
     super.initState();
     _fetchData();
     print(widget.orders.staffId);
   }
-
+  double _calculateTotal( List<OrderDetail> listOrderDetail, List<Product>listProduct) {
+    double total = 0;
+    for(int i=0 ;i<listOrderDetail.length;i++){
+      total+=listOrderDetail[i].quantity * listProduct[i].unitPrice;
+    }
+    return total;
+  }
   void _fetchData() async {
     OrderFireStore orderFireStore = OrderFireStore();
     String? name = await orderFireStore.getNameStaff(widget.orders.staffId);
     String id = widget.orders.staffId.id;
+    DocumentReference orderId = FirebaseFirestore.instance.collection('Orders').doc(widget.orders.id);
+    List<OrderDetail> fetchedOrderDetails = await OrderDetailFireStore().getListOrderDetailByOrderId(orderId);
+    List<Product> fetchedProducts = await OrderDetailFireStore().getProductById( fetchedOrderDetails);
+    total= _calculateTotal(fetchedOrderDetails, fetchedProducts);
     setState(() {
       staffName = name!;
       staffId = id;
@@ -124,7 +137,7 @@ class _OrderCardState extends State<OrderCard> {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      widget.orders.total.toString(),
+                      '$total VNĐ',
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -133,7 +146,13 @@ class _OrderCardState extends State<OrderCard> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        Get.to(OrderHistoryDetailPage(orders: widget.orders, staffName: staffName, staffId: staffId));
+                        Get.to(OrderHistoryDetailPage(
+                            orders: widget.orders,
+                            staffName: staffName,
+                            staffId: staffId,
+                            total: total,
+                        ))
+                        ;
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(150, 50),

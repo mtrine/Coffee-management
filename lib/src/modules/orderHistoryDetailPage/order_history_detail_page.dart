@@ -7,10 +7,11 @@ import '../../firebase/orderDetail_firestore.dart';
 import '../../models/orderDetail.dart';
 import '../../models/product.dart';
 class OrderHistoryDetailPage extends StatefulWidget {
-  OrderHistoryDetailPage({super.key, required this.orders,required this.staffId, required this.staffName});
+  const OrderHistoryDetailPage({super.key,required this.total, required this.orders,required this.staffId, required this.staffName});
   final Orders orders;
   final String staffId;
   final String staffName;
+  final double total;
   @override
   State<OrderHistoryDetailPage> createState() => _OrderHistoryDetailPageState();
 }
@@ -143,7 +144,7 @@ class _OrderHistoryDetailPageState extends State<OrderHistoryDetailPage> {
                   ),
               TextRow(title:"Thời gian order", content: formatTimestamp(widget.orders.orderDate)),
               TextRow(title:"Nhân viên", content:"${widget.staffName}-${widget.staffId}"),
-              TextRow(title:"Tổng tiền", content: widget.orders.total.toString()),
+              TextRow(title:"Tổng tiền", content:widget.total.toString() ),
             ],
           ),
         ),

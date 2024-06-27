@@ -10,7 +10,6 @@ class OrderFireStore  {
       "staffId": data.staffId,
       "orderDate": data.orderDate,
       "decription": data.decription,
-      "total": data.total,
     }
     );
   }
@@ -23,7 +22,7 @@ class OrderFireStore  {
       for (var doc in documents) {
         var data = doc.data() as Map<String, dynamic>; // Ép kiểu sang Map<String, dynamic>
         DocumentReference? staffIdRef = data['staffId'];
-        MyOrder.Orders product = MyOrder.Orders(doc.id, staffIdRef!, data['orderDate'], data['decription'], data['total']);
+        MyOrder.Orders product = MyOrder.Orders(doc.id, staffIdRef!, data['orderDate'], data['decription']);
         products.add(product);
       }
     } catch (e) {

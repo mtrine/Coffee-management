@@ -8,7 +8,6 @@ class AuthBloc {
   final _passwordController = StreamController<String>.broadcast();
   final _fNameController = StreamController<String>.broadcast();
   final _mlNameController = StreamController<String>.broadcast();
-  final _dobController = StreamController<String>.broadcast();
   final _addressController = StreamController<String>.broadcast();
   final _newPasswordController = StreamController<String>.broadcast();
   final _confirmPasswordController = StreamController<String>.broadcast();
@@ -18,7 +17,6 @@ class AuthBloc {
   Stream<String> get passwordStream => _passwordController.stream;
   Stream<String> get fNameStream => _fNameController.stream;
   Stream<String> get mlNameStream => _mlNameController.stream;
-  Stream<String> get dobStream => _dobController.stream;
   Stream<String> get addressStream => _addressController.stream;
   Stream<String> get newPasswordStream => _newPasswordController.stream;
   Stream<String> get confirmPasswordStream => _confirmPasswordController.stream;
@@ -29,14 +27,13 @@ class AuthBloc {
     _passwordController.close();
     _fNameController.close();
     _mlNameController.close();
-    _dobController.close();
     _addressController.close();
     _newPasswordController.close();
     _confirmPasswordController.close();
     _oldPasswordController.close();
   }
 
-  bool isValidInfo(String fname, String mlname, String phone, String dob, String address, String password) {
+  bool isValidInfo(String fname, String mlname, String phone, String address, String password) {
     if (fname.isEmpty) {
       _fNameController.addError('Nhập họ');
       return false;
@@ -55,11 +52,6 @@ class AuthBloc {
     }
     _phoneController.sink.add('');
 
-    if (dob.isEmpty) {
-      _dobController.addError('Nhập địa chỉ');
-      return false;
-    }
-    _dobController.sink.add('');
 
     if (address.isEmpty) {
       _addressController.addError('Nhập địa chỉ');
@@ -99,7 +91,7 @@ class AuthBloc {
     }
   }
 
-  Future<void> signUp(String fname, String lname, String phone, String dob, String address, String password, Function onSuccess, Function(String) onError) async {
+  Future<void> signUp(String fname, String lname, String phone, String address, String password, Function onSuccess, Function(String) onError) async {
     try {
       if (phone.isEmpty || password.isEmpty) {
         onError('Phone and password cannot be empty');
@@ -136,7 +128,6 @@ class AuthBloc {
           'phone': phone,
           'password': password,
           'address': address,
-          'bDate': dob,
           'manager': false,
         });
 

@@ -7,11 +7,10 @@ class Staff{
   late final String _password;
   late final String _phone;
   late final String _address;
-  late final String _dob;
   late final bool _manager;
 
   Staff(this._id, this._fname, this._mlname, this._password, this._phone,
-      this._address, this._dob,this._manager);
+      this._address, this._manager);
 
 
   String get id => _id;
@@ -27,7 +26,6 @@ class Staff{
       'password': _password,
       'phone': _phone,
       'address': _address,
-      'bDate': _dob,
     };
   }
 
@@ -40,7 +38,6 @@ class Staff{
       data['password'],
       data['phone'],
       data['address'],
-      data['dob'],
       data['manager']
     );
   }
@@ -57,7 +54,6 @@ class Staff{
           querySnapshot.docs.first['password'],
           querySnapshot.docs.first['phone'],
           querySnapshot.docs.first['address'],
-          querySnapshot.docs.first['bDate'],
           querySnapshot.docs.first['manager'],
         );
       } else {
@@ -99,11 +95,6 @@ class Staff{
     _address = value;
   }
 
-  String get dob => _dob;
-
-  set dob(String value) {
-    _dob = value;
-  }
 
   bool get manager => _manager;
 

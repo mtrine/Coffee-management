@@ -30,7 +30,7 @@ class _OrderCardState extends State<OrderCard> {
     _fetchData();
     print(widget.orders.staffId);
   }
-  double _calculateTotal( List<OrderDetail> listOrderDetail, List<Product>listProduct) {
+  Future<double> _calculateTotal( List<OrderDetail> listOrderDetail, List<Product>listProduct)async {
     double total = 0;
     for(int i=0 ;i<listOrderDetail.length;i++){
       total+=listOrderDetail[i].quantity * listProduct[i].unitPrice;
@@ -44,10 +44,11 @@ class _OrderCardState extends State<OrderCard> {
     DocumentReference orderId = FirebaseFirestore.instance.collection('Orders').doc(widget.orders.id);
     List<OrderDetail> fetchedOrderDetails = await OrderDetailFireStore().getListOrderDetailByOrderId(orderId);
     List<Product> fetchedProducts = await OrderDetailFireStore().getProductById( fetchedOrderDetails);
-    total= _calculateTotal(fetchedOrderDetails, fetchedProducts);
+    double total= await _calculateTotal(fetchedOrderDetails, fetchedProducts);
     setState(() {
       staffName = name!;
       staffId = id;
+      this.total=total;
     });
   }
 

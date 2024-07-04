@@ -20,7 +20,6 @@ class _SignUpPageState extends State<AddStaffPage> {
 
   final TextEditingController _phoneController = TextEditingController();
 
-  final TextEditingController _dobController = TextEditingController();
 
   final TextEditingController _addressController = TextEditingController();
 
@@ -68,8 +67,6 @@ class _SignUpPageState extends State<AddStaffPage> {
                   const SizedBox(height: 10),
                   TextFieldToAddStaff(content: 'SDT',hintText: 'Nhập số điện thoại',controller: _phoneController,isPassword: false,streamController: authBloc.phoneStream),
                   const SizedBox(height: 10),
-                  TextFieldToAddStaff(content: 'Ngày sinh',hintText: 'XX/YY/ZZZZ',controller: _dobController,isPassword: false,streamController: authBloc.dobStream),
-                  const SizedBox(height: 10),
                   TextFieldToAddStaff(content: 'Địa chỉ',hintText: 'Nhập địa chỉ',controller: _addressController,isPassword: false,streamController: authBloc.addressStream),
                   const SizedBox(height: 10),
                   TextFieldToAddStaff(content: 'Mật khẩu',hintText: 'Nhập mật khẩu',controller: _passwordController,isPassword: true,streamController: authBloc.passwordStream),
@@ -101,7 +98,6 @@ class _SignUpPageState extends State<AddStaffPage> {
       _fNameController.text,
       _mlNameController.text,
       _phoneController.text,
-      _dobController.text,
       _addressController.text,
       _passwordController.text,
     );
@@ -113,7 +109,6 @@ class _SignUpPageState extends State<AddStaffPage> {
         _fNameController.text.trim(),
         _mlNameController.text.trim(),
         _phoneController.text.trim(),
-        _dobController.text.trim(),
         _addressController.text.trim(),
         _passwordController.text.trim(),
             () {

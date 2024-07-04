@@ -17,7 +17,6 @@ class _EditInformationPageState extends State<EditInformationPage> {
   late final TextEditingController _fNameController;
   late final TextEditingController _mlNameController;
   late final TextEditingController _phoneController;
-  late final TextEditingController _dobController;
   late final TextEditingController _addressController;
 
   @override
@@ -26,7 +25,6 @@ class _EditInformationPageState extends State<EditInformationPage> {
     _fNameController = TextEditingController(text: widget.staff.fname);
     _mlNameController = TextEditingController(text: widget.staff.mlname);
     _phoneController = TextEditingController(text: widget.staff.phone);
-    _dobController = TextEditingController(text: widget.staff.dob);
     _addressController = TextEditingController(text: widget.staff.address);
   }
 
@@ -35,7 +33,6 @@ class _EditInformationPageState extends State<EditInformationPage> {
     _fNameController.dispose();
     _mlNameController.dispose();
     _phoneController.dispose();
-    _dobController.dispose();
     _addressController.dispose();
     super.dispose();
   }
@@ -49,7 +46,6 @@ class _EditInformationPageState extends State<EditInformationPage> {
       "",
       _phoneController.text,
       _addressController.text,
-      _dobController.text,
       widget.staff.manager,
     );
     staffFireStore.updateInformation(staff);
@@ -96,12 +92,6 @@ class _EditInformationPageState extends State<EditInformationPage> {
                   content: "Số điện thoại",
                   hintText: "Nhập SĐT",
                   controller: _phoneController,
-                ),
-                const SizedBox(height: 20),
-                TextFieldEdit(
-                  content: "Ngày/Tháng/Năm",
-                  hintText: "Nhập ngày tháng năm sinh",
-                  controller: _dobController,
                 ),
                 const SizedBox(height: 20),
                 TextFieldEdit(

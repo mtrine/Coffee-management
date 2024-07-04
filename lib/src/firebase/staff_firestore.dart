@@ -21,7 +21,7 @@ class StaffFireStore {
     try {
       DocumentSnapshot<Map<String, dynamic>> doc = await firestore.collection(
           _collection).doc(id).get();
-      return Staff(id,doc['fName'],doc['mlName'],doc['password'],doc['phone'],doc['address'],doc['bDate'],doc['manager']);
+      return Staff(id,doc['fName'],doc['mlName'],doc['password'],doc['phone'],doc['address'],doc['manager']);
     } catch (e) {
       print("Error: $e");
       rethrow; // Ném ngoại lệ để báo lỗi nếu có
@@ -46,7 +46,6 @@ class StaffFireStore {
         'mlName':data.mlname,
         'address':data.address,
         'phone':data.phone,
-        'bDate':data.dob
       });
     } catch (e) {
       print("Error: $e");
@@ -97,7 +96,7 @@ class StaffFireStore {
       List<DocumentSnapshot> documents = querySnapshot.docs;
       for (var doc in documents) {
         // Xây dựng một đối tượng Product từ dữ liệu của mỗi tài liệu
-        Staff staff = Staff(doc.id, doc['fName'], doc['mlName'], doc['password'], doc['phone'], doc['address'], doc['bDate'], doc['manager']);
+        Staff staff = Staff(doc.id, doc['fName'], doc['mlName'], doc['password'], doc['phone'], doc['address'], doc['manager']);
         if(staff.manager==false){
           listStaff.add(staff);
         }

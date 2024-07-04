@@ -78,10 +78,6 @@ class _InformationDetailPageState extends State<InformationDetailPage> {
                 content: staffInfor.phone,
               ),
               RowInformation(
-                title: "Ngày sinh:",
-                content: staffInfor.dob,
-              ),
-              RowInformation(
                 title: "Địa chỉ:",
                 content: staffInfor.address,
               ),
